@@ -23,8 +23,9 @@ import SemanticUiSegmentGroup from './components/segment-group.vue'
 import SemanticUiList from './components/list.vue'
 import SemanticUiItem from './components/item.vue'
 import SemanticUiItemContent from './components/item-content.vue'
-import SemanticUiItemHeader from './components/item-header.vue'
-import SemanticUiItemDescription from './components/item-description.vue'
+import SemanticUiItemContentHeader from './components/item-content-header.vue'
+import SemanticUiItemContentDescription from './components/item-content-description.vue'
+import SemanticUiItemContentExtra from './components/item-content-extra.vue'
 import SemanticUiLoader from './components/loader.vue'
 import SemanticUiRail from './components/rail.vue'
 import SemanticUiReveal from './components/reveal.vue'
@@ -85,9 +86,10 @@ function installed(Vue)	{
 
   Vue.component('SuList', SemanticUiList);
   Vue.component('SuItem', SemanticUiItem);
-  Vue.component('SuItemContent', SemanticUiItemContent);
-  Vue.component('SuItemHeader', SemanticUiItemHeader);
-  Vue.component('SuItemDescription', SemanticUiItemDescription);
+  Vue.component('SuContent', SemanticUiItemContent);
+  Vue.component('SuContentHeader', SemanticUiItemContentHeader);
+  Vue.component('SuContentDescription', SemanticUiItemContentDescription);
+  Vue.component('SuContentExtra', SemanticUiItemContentExtra);
 
   Vue.component('SuLoader', SemanticUiLoader);
 

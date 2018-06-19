@@ -8,13 +8,12 @@ export default {
   name: 'su-item',
 
   props: {
-    element: {
-      type: String,
-      default: 'div',
-      required: false
-    },
+    element: String,
+    tag: String,
 
     active: Boolean,
+    header: Boolean,
+    link: Boolean,
 
     icon: String
   },
@@ -30,10 +29,12 @@ export default {
    */
   render(createElement)  {
     let item = new Item(this.$props),
-      className = 'item',
+      className = '',
       children = [];
 
-    if(item.active) className += ` active`
+    if(item.active) className += `active `
+    if(item.header) className += `header `
+    if(item.link) className += `link `
 
     if(item.icon) {
       children.push(createElement(SuIcon, { props: { name: item.icon } }));
@@ -41,8 +42,10 @@ export default {
 
     children.push(this.$slots.default);
 
+    className += `item`;
+
     return createElement(
-      this.element,
+      this.element || this.tag || 'div',
       {
         class: className
       },

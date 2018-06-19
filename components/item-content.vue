@@ -10,7 +10,7 @@
 import { ItemContent } from './item'
 
 export default {
-  name: 'su-item-content',
+  name: 'su-content',
 
   props: {
     aligned: String,

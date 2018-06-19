@@ -28,8 +28,8 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
-    let className = 'ui header',
-      element = this.element ? this.element : 'div',
+    let className = 'ui',
+      element = (this.element || this.tag) ? this.element || this.tag : 'div',
       header = new Header(this.$props),
       children = [];
 
@@ -48,6 +48,8 @@ export default {
     if(header.color) className += ` ${header.color}`;
     if(header.inverted)  className += ` inverted`;
     if(header.size) className += ` ${header.size}`;
+
+    className += ` header`;
 
     children.push(this.$slots.default);
 
