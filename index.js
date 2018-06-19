@@ -56,6 +56,8 @@ function installed(Vue)	{
     semantic = require('semantic-ui/dist/semantic.min.js');
   }
 
+  require('semantic-ui/dist/semantic.min.css');
+
   Vue.component('SuButton', SemanticUiButton);
   Vue.component('SuButtonGroup', SemanticUiButtonGroup);
 
