@@ -24,9 +24,15 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/toaonly42/vue-semantic-ui.git"
+    "url": "git+https://github.com/toaonly/vuejs-semanstic-ui.git"
   },
-  "keywords": [],
+  "keywords": [
+    "semantic ui",
+    "semantic-ui"
+  ],
   "license": "ISC",
-  "homepage": "https://bitbucket.org/toaonly42/vue-semantic-ui#readme"
+  "bugs": {
+    "url": "https://github.com/toaonly/vuejs-semanstic-ui/issues"
+  },
+  "homepage": "https://github.com/toaonly/vuejs-semanstic-ui#readme"
 }
