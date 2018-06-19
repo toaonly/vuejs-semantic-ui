@@ -1,0 +1,171 @@
+import { isValid, convertNumberToWord } from './util'
+
+let validateProps = (
+  props = {
+    /** @type {boolean} */
+    secondary,
+
+    /** @type {boolean} */
+    pointing,
+
+    /** @type {boolean} */
+    tabular,
+
+    /** @type {boolean} */
+    text,
+
+    /** @type {boolean} */
+    vertical,
+
+    /** @type {boolean} */
+    pagination,
+
+    /** @type {boolean} */
+    stackable,
+
+    /** @type {boolean} */
+    inverted,
+
+    /** @type {boolean} */
+    fluid,
+
+    /** @type {boolean} */
+    compact,
+
+    /** @type {boolean} */
+    borderless,
+
+    /** @type {boolean | string} */
+    icon,
+
+    /** @type {string} */
+    fixed,
+
+    /** @type {string} */
+    color,
+
+    /** @type {string | number} */
+    column,
+
+    /** @type {boolean | string} */
+    attached,
+
+    /** @type {string} */
+    size
+  }
+) => {
+  return {
+    secondary: (value => isValid.boolean(value) ? value : void 0)(props.secondary),
+
+    pointing: (value => isValid.boolean(value) ? value : void 0)(props.pointing),
+
+    tabular: (value => isValid.boolean(value) ? value : void 0)(props.tabular),
+
+    text: (value => isValid.boolean(value) ? value : void 0)(props.text),
+
+    vertical: (value => isValid.boolean(value) ? value : void 0)(props.vertical),
+
+    pagination: (value => isValid.boolean(value) ? value : void 0)(props.pagination),
+
+    stackable: (value => isValid.boolean(value) ? value : void 0)(props.stackable),
+
+    inverted: (value => isValid.boolean(value) ? value : void 0)(props.inverted),
+
+    fluid: (value => isValid.boolean(value) ? value : void 0)(props.fluid),
+
+    compact: (value => isValid.boolean(value) ? value : void 0)(props.compact),
+
+    borderless: (value => isValid.boolean(value) ? value : void 0)(props.borderless),
+
+    icon: (value => {
+      if (isValid.boolean(value)) {
+        if (value === true) return true;
+      }
+
+      if (isValid.string(value) && value === 'labeled') {
+        return 'labeled icon';
+      }
+
+      return void 0;
+    })(props.icon),
+
+    fixed: (value => isValid.string(value) ? value : void 0)(props.fixed),
+
+    color: (value => isValid.string(value) ? value : void 0)(props.color),
+
+    column: (value => {
+      if(isValid.string(value)) {
+        let numValue = Number(value);
+
+        if(isNaN(numValue))  {
+          return value + ' item';
+        } else {
+          value = numValue;
+        }
+      }
+
+      if(isValid.number(value)) {
+        return convertNumberToWord(value) + ' item';
+      }
+
+      return void 0;
+    })(props.column),
+
+    attached: (value => {
+      if(value === true)  return 'attached';
+      if(isValid.string(value)) return `${value} attached`;
+
+      return void 0;
+    })(props.attached),
+
+    size: (value => isValid.string(value) ? value : void 0)(props.size)
+  };
+}
+
+class Menu {
+  constructor(props = {
+    secondary,
+    pointing,
+    tabular,
+    text,
+    vertical,
+    pagination,
+    stackable,
+    inverted,
+    fluid,
+    compact,
+    borderless,
+
+    icon,
+
+    fixed,
+    color,
+    column,
+    attached,
+    size
+  }) {
+    let validProps = validateProps(props);
+
+    this.secondary = validProps.secondary;
+    this.pointing = validProps.pointing;
+    this.tabular = validProps.tabular;
+    this.text = validProps.text;
+    this.vertical = validProps.vertical;
+    this.pagination = validProps.pagination;
+    this.stackable = validProps.stackable;
+    this.inverted = validProps.inverted;
+    this.fluid = validProps.fluid;
+    this.compact = validProps.compact;
+    this.borderless = validProps.borderless;
+
+    this.icon = validProps.icon;
+
+    this.fixed = validProps.fixed;
+    this.color = validProps.color;
+    this.column = validProps.column;
+    this.attached = validProps.attached;
+    this.size = validProps.size;
+  }
+}
+
+export default Menu

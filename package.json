@@ -1,0 +1,32 @@
+{
+  "name": "vuejs-semantic-ui",
+  "version": "0.0.1",
+  "description": "Semantic UI for Vue.js",
+  "author": "toaonly <toaonly42@gmail.com>",
+  "private": false,
+  "scripts": {},
+  "dependencies": {
+    "jquery": "^3.3.1",
+    "semantic-ui": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.1"
+  },
+  "engines": {
+    "node": ">= 6.0.0",
+    "npm": ">= 3.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/toaonly42/vue-semantic-ui.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/toaonly42/vue-semantic-ui#readme"
+}
