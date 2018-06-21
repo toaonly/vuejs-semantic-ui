@@ -6,10 +6,6 @@
 
 <script>
 export default {
-  name: 'su-field-label',
-
-  props: {
-    for: String
-  }
+  name: 'su-field-label'
 }
 </script>
