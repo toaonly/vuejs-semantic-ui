@@ -1,141 +1,120 @@
-import { isValid, isValidProp } from './util'
+import { isValid } from './util'
 
-let getSrc = (value) => (isValid.string(value) ? value : void (0))
-let getColor = (value) => (isValid.string(value) ? value : void(0))
-let getPointing = (value) => {
-  if(isValid.string(value) || isValid.boolean(value)) {
-    if(value === false) return void(0);
+/**
+ * @param {Label} props
+ */
+let validateProps = (props) => {
+  return {
+    src: (value => (isValid.string(value) ? value : void (0)))(props.src),
+    color: (value => (isValid.string(value) ? value : void (0)))(props.color),
+    pointing: (value => {
+      if (value === true) return 'pointing';
+      if (isValid.string(value)) {
+        if (value === 'below') return 'pointing below';
+        if (value === 'left' || value === 'right') return `${value} pointing`;
+      }
 
-    let result = 'pointing';
+      return void (0);
+    })(props.pointing),
+    corner: (value => (isValid.string(value) ? value : void (0)))(props.corner),
+    tagged: (value => (isValid.boolean(value) ? value : void (0)))(props.tagged),
+    ribbon: (value => {
+      if (value === true) return 'ribbon';
+      if (isValid.string(value) && value === 'right')  return 'right ribbon';
 
-    if(value === 'below') {
-      return `${result} ${value}`;
-    }
+      return void (0);
+    })(props.ribbon),
+    detail: (value => (isValid.string(value) ? value : void (0)))(props.detail),
+    icon: (value => (isValid.string(value) ? value : void (0)))(props.icon),
+    attached: (value => (isValid.string(value) ? value : void (0)))(props.attached),
+    horizontal: (value => (isValid.boolean(value) ? value : void (0)))(props.horizontal),
+    floating: (value => (isValid.boolean(value) ? value : void (0)))(props.floating),
+    circular: (value => {
+      if (value === true) return 'circular';
+      if (isValid.string(value) && value === 'empty') return 'empty circular';
 
-    if(value === 'left' || value === 'right') {
-      return `${value} ${result}`;
-    }
-
-    return result;
+      return void (0);
+    })(props.circular),
+    basic: (value => (isValid.boolean(value) ? value : void (0)))(props.basic),
+    size: (value => (isValid.string(value) ? value : void (0)))(props.size),
+    noAnchor: (value => (isValid.boolean(value) ? value : void (0)))(props.noAnchor),
   }
-
-  return void(0);
 }
-let getCorner = (value) => (isValid.string(value) ? value : void(0))
-let getTag = (value) => (isValid.boolean(value) ? value : void(0))
-let getRibbon = (value) => {
-  if ((isValid.string(value) || isValid.boolean(value))) {
-    if(value === false) return void(0);
-    if(value === 'right') return `${value} ribbon`;
-    if(value === true)  return 'ribbon';
-  }
-
-  return void(0);
-}
-let getDetail = (value) => (isValid.string(value) ? value : void(0))
-let getIcon = (value) => (isValid.string(value) ? value : void(0))
-let getAttached = (value) => (isValid.string(value) ? value : void(0))
-let getHorizontal = (value) => (isValid.boolean(value) ? value : void(0))
-let getFloating = (value) => (isValid.boolean(value) ? value : void(0))
-let getCircular = (value) => {
-  if ((isValid.string(value) || isValid.boolean(value))) {
-    if(value === false) return void(0);
-    if(value === 'empty') return `${value} circular`;
-    if(value === true) return `circular`;
-  }
-
-  return void(0);
-}
-let getBasic = (value) => (isValid.boolean(value) ? value : void(0))
-let getSize = (value) => (isValid.string(value) ? value : void(0))
-let getNoAnchor = (value) => (isValid.boolean(value) ? value : void(0))
 
 export default class Label {
-  constructor({
-    src,
-    pointing,
-    corner,
-    tag,
-    ribbon,
-    attached,
-    horizontal,
-    floating,
-    detail,
-    icon,
-    iconRight,
-    circular,
-    basic,
-    size,
-    color,
-    noAnchor
-  }) {
-    /** @type {string} */
-    this.src = getSrc(src);
+  /**
+   * @param {Label} props
+   */
+  constructor(props) {
+    let validProps = validateProps(props);
 
     /** @type {string} */
-    this.pointing = getPointing(pointing);
+    this.src = validProps.src;
+
+    /** @type {string} */
+    this.pointing = validProps.pointing;
 
     /** @type {boolean} */
-    this.corner = getCorner(corner);
+    this.corner = validProps.corner;
 
     /** @type {boolean} */
-    this.tag = getTag(tag);
+    this.tagged = validProps.tagged;
 
     /** @type {string | boolean} */
-    this.ribbon = getRibbon(ribbon);
+    this.ribbon = validProps.ribbon;
 
     /** @type {string} */
-    this.attached = getAttached(attached);
+    this.attached = validProps.attached;
 
     /** @type {boolean} */
-    this.horizontal = getHorizontal(horizontal);
+    this.horizontal = validProps.horizontal;
 
     /** @type {boolean} */
-    this.floating = getFloating(floating);
+    this.floating = validProps.floating;
 
     /** @type {string} */
-    this.detail = getDetail(detail);
+    this.detail = validProps.detail;
 
     /** @type {string} */
-    this.icon = getIcon(icon);
+    this.icon = validProps.icon;
 
     /** @type {string} */
-    this.iconRight = getIcon(iconRight);
+    this.iconRight = validProps.iconRight;
 
     /** @type {string | boolean} */
-    this.circular = getCircular(circular);
+    this.circular = validProps.circular;
 
     /** @type {boolean} */
-    this.basic = getBasic(basic);
+    this.basic = validProps.basic;
 
     /** @type {string} */
-    this.size = getSize(size);
+    this.size = validProps.size;
 
     /** @type {string} */
-    this.color = getColor(color);
+    this.color = validProps.color;
 
     /** @type {boolean} */
-    this.noAnchor = getNoAnchor(noAnchor);
+    this.noAnchor = validProps.noAnchor;
   }
 }
 
 export class LabelGroup {
-  constructor({
-    size,
-    color,
-    tag,
-    circular
-  }) {
-    /** @type {string} */
-    this.size = getSize(size);
+  /**
+   * @param {LabelGroup} props
+   */
+  constructor(props) {
+    let validProps = validateProps(props);
 
     /** @type {string} */
-    this.color = getColor(color);
+    this.size = validProps.size;
+
+    /** @type {string} */
+    this.color = validProps.color;
 
     /** @type {boolean} */
-    this.tag = getTag(tag);
+    this.tagged = validProps.tagged;
 
     /** @type {string | boolean} */
-    this.circular = getCircular(circular);
+    this.circular = validProps.circular;
   }
 }

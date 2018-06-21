@@ -1,10 +1,5 @@
-<template>
-<div class="ui labels">
-  <slot></slot>
-</div>
-</template>
-
 <script>
+import { CreateElement } from 'vue'
 import { LabelGroup } from './label'
 
 export default {
@@ -13,18 +8,31 @@ export default {
   props: {
     size: String,
     color: String,
-    tag: Boolean,
+    tagged: Boolean,
     circular: [ Boolean, String ],
   },
 
-  mounted() {
-    let $el = this.$el,
+  /**
+   * @param {CreateElement} createElement
+   */
+  render(createElement)  {
+    let className = 'ui',
       labelGroup = new LabelGroup(this.$props);
 
-    if(labelGroup.size) $el.classList.add(labelGroup.size);
-    if(labelGroup.color) $el.classList.add(labelGroup.color);
-    if(labelGroup.tag) $el.classList.add('tag');
-    if(labelGroup.circular) $el.classList.add(labelGroup.circular);
+    if(labelGroup.size) className += ` ${labelGroup.size}`
+    if(labelGroup.color) className += ` ${labelGroup.color}`
+    if(labelGroup.tagged) className += ' tagged'
+    if(labelGroup.circular) className += ` ${labelGroup.circular}`
+
+    className += ' labels'
+
+    return createElement(
+      'div',
+      {
+        class: className
+      },
+      [ this.$slots.default ]
+    )
   }
 }
 </script>

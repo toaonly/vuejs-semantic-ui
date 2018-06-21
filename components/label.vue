@@ -22,7 +22,7 @@ export default {
     icon: String,
     iconRight: String,
     basic: Boolean,
-    tag: Boolean,
+    tagged: Boolean,
     attached: String,
     floating: Boolean,
     circular: [ Boolean, String ],
@@ -69,7 +69,7 @@ export default {
     }
 
     if(label.corner)  className += ` ${label.corner} corner`;
-    if(label.tag)  className += ` tag`;
+    if(label.tagged)  className += ` tagged`;
     if(label.basic)  className += ` basic`;
     if(label.ribbon)  className += ` ${label.ribbon}`;
     if(label.attached)  className += ` ${label.attached} attached`;
@@ -95,14 +95,6 @@ export default {
     );
 
     return labelTemplate;
-  },
-
-  mounted() {
-    let el = this.$el;
-
-    if(el.parentElement.classList.contains('field'))  {
-      el.classList.remove('ui');
-    }
   }
 }
 </script>

@@ -37,6 +37,7 @@ import SemanticUiBreadcrumbDivider from './components/breadcrumb-divider.vue'
 import SemanticUiForm from './components/form.vue'
 import SemanticUiField from './components/field.vue'
 import SemanticUiFields from './components/fields.vue'
+import SemanticUiFieldLabel from './components/field-label.vue'
 import SemanticUiGrid from './components/grid.vue'
 import SemanticUiRow from './components/row.vue'
 import SemanticUiColumn from './components/column.vue'
@@ -106,6 +107,7 @@ function installed(Vue)	{
   Vue.component('SuForm', SemanticUiForm);
   Vue.component('SuField', SemanticUiField);
   Vue.component('SuFields', SemanticUiFields);
+  Vue.component('SuFieldLabel', SemanticUiFieldLabel);
 
   Vue.component('SuGrid', SemanticUiGrid);
   Vue.component('SuRow', SemanticUiRow);
