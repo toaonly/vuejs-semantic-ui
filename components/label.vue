@@ -38,8 +38,8 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
-    let element = this.element ? this.element : 'a',
-      className = 'ui label',
+    let element = this.element || this.tag || 'a',
+      className = 'ui',
       label = new Label(this.$props),
       children = [];
 
@@ -79,6 +79,8 @@ export default {
 
     if(label.color)  className += ` ${label.color}`;
 
+    className += ` label`;
+
     if(label.noAnchor) element = 'div';
 
     let labelTemplate = createElement(
@@ -94,5 +96,13 @@ export default {
 
     return labelTemplate;
   },
+
+  mounted() {
+    let el = this.$el;
+
+    if(el.parentElement.classList.contains('field'))  {
+      el.classList.remove('ui');
+    }
+  }
 }
 </script>
