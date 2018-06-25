@@ -22,7 +22,7 @@ export default {
 
     fixed: String,
     attached: String,
-    column: String,
+    column: [ String, Number ],
     color: String,
     size: String
   },
