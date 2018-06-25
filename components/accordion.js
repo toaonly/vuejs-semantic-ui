@@ -1,5 +1,6 @@
 import { isValid } from './util'
 import { SemanticUI, SemanticUISettings } from './semantic-ui'
+import Menu from './menu'
 
 let validateProps = (props = {
   /** @type {boolean} */
@@ -10,7 +11,7 @@ let validateProps = (props = {
   inverted,
   /** @type {boolean} */
   field,
-  /** @type {boolean} */
+  /** @type {Menu} */
   menu
 }) => {
   return {
@@ -26,8 +27,8 @@ let validateProps = (props = {
     /** @return {boolean} */
     field: (value => (isValid.boolean(value) ? value : void(0)))(props.field),
 
-    /** @return {boolean} */
-    menu: (value => (isValid.boolean(value) ? value : void(0)))(props.menu)
+    /** @return {Menu} */
+    menu: (value => (isValid.object(value) ? new Menu(value) : void(0)))(props.menu)
   }
 }
 
@@ -184,7 +185,7 @@ export class Accordion extends SemanticUI {
     /**
      * Props Variation - Menu
      *
-     * @type {boolean}
+     * @type {Menu}
      */
     this.menu;
   };

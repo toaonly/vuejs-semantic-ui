@@ -26,7 +26,7 @@ export default {
     fluid: Boolean,
     inverted: Boolean,
     field: Boolean,
-    menu: Boolean,
+    menu: Object,
 
     settings: {
       type: Object,
@@ -106,7 +106,9 @@ export default {
         if(accordion.inverted)  el.classList.add('inverted');
         if(accordion.field)  el.classList.add('field');
         if(accordion.menu)  {
-          el.classList.add('vertical', 'menu');
+          let menu = accordion.menu;
+
+          el.className += ` ${menu.generateClassName()}`;
         }
 
         this._accordion = accordion;

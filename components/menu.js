@@ -166,6 +166,34 @@ class Menu {
     this.attached = validProps.attached;
     this.size = validProps.size;
   }
+
+  generateClassName() {
+    let className = '';
+
+    if(this.secondary) className += ` secondary`
+    if(this.pointing) className += ` pointing`
+    if(this.tabular) className += ` tabular`
+    if(this.text) className += ` text`
+    if(this.vertical) className += ` vertical`
+    if(this.pagination) className += ` pagination`
+    if(this.stackable) className += ` stackable`
+    if(this.inverted) className += ` inverted`
+    if(this.fluid) className += ` fluid`
+    if(this.compact) className += ` compact`
+    if(this.borderless) className += ` borderless`
+
+    if(this.icon) className += ` ${this.icon}`
+
+    if(this.fixed) className += ` ${this.fixed} fixed`
+    if(this.attached) className += ` ${this.attached}`
+    if(this.column) className += ` ${this.column}`
+    if(this.color) className += ` ${this.color}`
+    if(this.size) className += ` ${this.size}`
+
+    className += ' menu';
+
+    return className;
+  }
 }
 
 export default Menu
