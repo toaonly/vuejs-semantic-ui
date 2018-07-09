@@ -1,4 +1,48 @@
+import { isValid } from './util'
 import { SemanticUI, SemanticUISettings } from './semantic-ui'
+
+/**
+ * @typedef ModalProp
+ * @property {boolean} selection
+ * @property {boolean} search
+ * @property {boolean} multiple
+ * @property {boolean} inline
+ * @property {boolean} pointing
+ * @property {boolean} floating
+ * @property {boolean} simple
+ * @property {boolean} labeled
+ * @property {boolean} loading
+ * @property {boolean} error
+ * @property {boolean} active
+ * @property {boolean} disabled
+ * @property {boolean} scrolling
+ * @property {boolean} compact
+ * @property {boolean} fluid
+ * @property {string} icon
+ *
+ * @param {ModalProp} props
+ */
+let validateProps = (props) => {
+  return {
+    selection: (value => isValid.boolean(value) ? value : void 0)(props.selection),
+    search: (value => isValid.boolean(value) ? value : void 0)(props.search),
+    multiple: (value => isValid.boolean(value) ? value : void 0)(props.multiple),
+    inline: (value => isValid.boolean(value) ? value : void 0)(props.inline),
+    pointing: (value => isValid.boolean(value) ? value : void 0)(props.pointing),
+    floating: (value => isValid.boolean(value) ? value : void 0)(props.floating),
+    simple: (value => isValid.boolean(value) ? value : void 0)(props.simple),
+    labeled: (value => isValid.boolean(value) ? value : void 0)(props.labeled),
+    loading: (value => isValid.boolean(value) ? value : void 0)(props.loading),
+    error: (value => isValid.boolean(value) ? value : void 0)(props.error),
+    active: (value => isValid.boolean(value) ? value : void 0)(props.active),
+    disabled: (value => isValid.boolean(value) ? value : void 0)(props.disabled),
+    scrolling: (value => isValid.boolean(value) ? value : void 0)(props.scrolling),
+    compact: (value => isValid.boolean(value) ? value : void 0)(props.compact),
+    fluid: (value => isValid.boolean(value) ? value : void 0)(props.fluid),
+
+    icon: (value => isValid.string(value) ? value : void 0)(props.icon),
+  }
+}
 
 export class DropdownSettings extends SemanticUISettings {
   constructor(settings = {
@@ -70,16 +114,36 @@ export class DropdownSettings extends SemanticUISettings {
     },
 
     /* Callbacks */
-    onChange: function (value, text, $selected) { },
-    onAdd: function (value, text, $selected) { },
-    onRemove: function (value, text, $selected) { },
+    onChange: function (value, text, $selected) {
+      self.emit(this, settings.onChange, args);
+    },
+    onAdd: function (value, text, $selected) {
+      self.emit(this, settings.onAdd, args);
+    },
+    onRemove: function (value, text, $selected) {
+      self.emit(this, settings.onRemove, args);
+    },
 
-    onLabelSelect: function ($selectedLabels) { },
-    onLabelCreate: function (value, text) { return $(this); },
-    onLabelRemove: function (value) { return true; },
-    onNoResults: function (searchTerm) { return true; },
-    onShow: function () { },
-    onHide: function () { },
+    onLabelSelect: function ($selectedLabels) {
+      self.emit(this, settings.onLabelSelect, args);
+    },
+    onLabelCreate: function (value, text) {
+      self.emit(this, settings.onLabelCreate, args);
+    },
+    onLabelRemove: function (value) {
+      self.emit(this, settings.onLabelRemove, args);
+      return true;
+    },
+    onNoResults: function (searchTerm) {
+      self.emit(this, settings.onNoResults, args);
+      return true;
+    },
+    onShow: function () {
+      self.emit(this, settings.onShow, args);
+    },
+    onHide: function () {
+      self.emit(this, settings.onHide, args);
+    },
 
     message: {
       addResult: 'Add <b>{term}</b>',
@@ -457,6 +521,54 @@ export class Dropdown extends SemanticUI {
     this._settings;
 
     this.setSettings(settings);
+
+    /** @type {boolean} */
+    this.selection;
+
+    /** @type {boolean} */
+    this.search;
+
+    /** @type {boolean} */
+    this.multiple;
+
+    /** @type {boolean} */
+    this.inline;
+
+    /** @type {boolean} */
+    this.pointing;
+
+    /** @type {boolean} */
+    this.floating;
+
+    /** @type {boolean} */
+    this.simple;
+
+    /** @type {boolean} */
+    this.labeled;
+
+    /** @type {boolean} */
+    this.loading;
+
+    /** @type {boolean} */
+    this.error;
+
+    /** @type {boolean} */
+    this.active;
+
+    /** @type {boolean} */
+    this.disabled;
+
+    /** @type {boolean} */
+    this.scrolling;
+
+    /** @type {boolean} */
+    this.compact;
+
+    /** @type {boolean} */
+    this.fluid;
+
+    /** @type {string} */
+    this.icon;
   };
 
   /**
@@ -477,6 +589,30 @@ export class Dropdown extends SemanticUI {
     this._settings = settings;
 
     this.initialize();
+  };
+
+  /**
+   * @param {ModalProp} props
+   */
+  setProps(props)  {
+    let validProps = validateProps(props);
+
+    this.selection = validProps.selection;
+    this.search = validProps.search;
+    this.multiple = validProps.multiple;
+    this.inline = validProps.inline;
+    this.pointing = validProps.pointing;
+    this.floating = validProps.floating;
+    this.simple = validProps.simple;
+    this.labeled = validProps.labeled;
+    this.loading = validProps.loading;
+    this.error = validProps.error;
+    this.active = validProps.active;
+    this.disabled = validProps.disabled;
+    this.scrolling = validProps.scrolling;
+    this.compact = validProps.compact;
+    this.fluid = validProps.fluid;
+    this.icon = validProps.icon;
   };
 
   setupMenu(values) { this._behavior('setup menu', values) };
