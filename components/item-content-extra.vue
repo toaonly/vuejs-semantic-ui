@@ -9,7 +9,7 @@ export default {
    */
   render(createElement)  {
     return createElement(
-      this.element,
+      'div',
       {
         class: 'extra'
       },

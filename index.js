@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 import SemanticUiAccordion from './components/accordion.vue'
 import SemanticUiCheckbox from './components/checkbox.vue'
 import SemanticUiDimmer from './components/dimmer.vue'
@@ -42,11 +44,18 @@ import SemanticUiGrid from './components/grid.vue'
 import SemanticUiRow from './components/row.vue'
 import SemanticUiColumn from './components/column.vue'
 import SemanticUiMenu from './components/menu.vue'
+import SemanticUiMessage from './components/message.vue'
+import SemanticUiTable from './components/table.vue'
+import SemanticUiTableRow from './components/table-row.vue'
+import SemanticUiTableCell from './components/table-cell.vue'
+import SemanticUiTableBody from './components/table-body.vue'
 
 import SemanticUiTitle from './components/title.vue'
 import SemanticUiContent from './components/content.vue'
 
-
+/**
+ * @param {Vue} Vue
+ */
 function installed(Vue)	{
   let jQuery = require('jquery'), semantic;
 
@@ -114,6 +123,14 @@ function installed(Vue)	{
   Vue.component('SuColumn', SemanticUiColumn);
 
   Vue.component('SuMenu', SemanticUiMenu);
+
+  Vue.component('SuMessage', SemanticUiMessage);
+
+  Vue.component('SuTable', SemanticUiTable);
+  Vue.component('SuTr', SemanticUiTableRow);
+  Vue.component('SuTd', SemanticUiTableCell);
+  Vue.component('SuTh', SemanticUiTableCell, { props: { tag: 'th' } });
+  // Vue.component('SuTh', SemanticUiTableC, { props: { tag: 'th' } });
 
 
   Vue.component('SuTitle', SemanticUiTitle);

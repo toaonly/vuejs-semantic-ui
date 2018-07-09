@@ -33,8 +33,12 @@ export default {
   },
 
   methods: {
-    onClick(event) {
-      this.$emit('click', event);
+    /**
+     * @param {MouseEvent} e
+     */
+    onClick(e) {
+      e.stopPropagation();
+      this.$emit('click', e);
     }
   },
 

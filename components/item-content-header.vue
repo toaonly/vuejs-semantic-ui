@@ -4,12 +4,16 @@ import { CreateElement } from 'vue'
 export default {
   name: 'su-content-header',
 
+  props: {
+    tag: String
+  },
+
   /**
    * @param {CreateElement} createElement
    */
   render(createElement)  {
     return createElement(
-      this.element,
+      this.tag || 'div',
       {
         class: 'header'
       },

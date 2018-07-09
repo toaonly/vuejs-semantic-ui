@@ -1,7 +1,5 @@
 <template>
-<div
-  @click="(e) => this.eventHandler(e, 'click')"
-  class="content">
+<div :class="className">
   <slot></slot>
 </div>
 </template>
@@ -12,23 +10,24 @@ import { ItemContent } from './item'
 export default {
   name: 'su-content',
 
+  data()  {
+    return {
+      className: ''
+    }
+  },
+
   props: {
     aligned: String,
     floated: String,
   },
 
-  methods: {
-    eventHandler(e, name)  {
-      this.$emit(name, e);
-    }
-  },
+  created() {
+    let itemContent = new ItemContent(this.$props);
 
-  mounted() {
-    let $el = this.$el,
-      itemContent = new ItemContent(this.$props);
+    if(itemContent.aligned) this.className += `${itemContent.aligned} aligned `
+    if(itemContent.floated) this.className += `${itemContent.floated} floated `
 
-    if(itemContent.aligned) $el.className += ` ${itemContent.aligned} aligned`
-    if(itemContent.floated) $el.className += ` ${itemContent.floated} floated`
+    className += 'content'
   }
 }
 </script>

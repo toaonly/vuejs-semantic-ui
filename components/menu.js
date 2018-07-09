@@ -79,7 +79,7 @@ let validateProps = (
 
     icon: (value => {
       if (isValid.boolean(value)) {
-        if (value === true) return true;
+        if (value === true) return 'icon';
       }
 
       if (isValid.string(value) && value === 'labeled') {

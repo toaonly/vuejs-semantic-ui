@@ -15,7 +15,33 @@ export default {
     header: Boolean,
     link: Boolean,
 
-    icon: String
+    icon: String,
+
+    to: [ String, Object ],
+    replace: {
+      type: Boolean,
+      default: false
+    },
+    append: {
+      type: Boolean,
+      default: false
+    },
+    activeClass: {
+      type: String,
+      default: 'router-link-active'
+    },
+    exact: {
+      type: Boolean,
+      default: false
+    },
+    event: {
+      type: [ String, Array ],
+      default: () => 'click'
+    },
+    exactActiveClass: {
+      type: String,
+      default: 'router-link-exact-active'
+    },
   },
 
   methods: {
@@ -27,7 +53,7 @@ export default {
   /**
    * @param {CreateElement} createElement
    */
-  render(createElement)  {
+  render(h)  {
     let item = new Item(this.$props),
       className = '',
       children = [];
@@ -37,20 +63,34 @@ export default {
     if(item.link) className += `link `
 
     if(item.icon) {
-      children.push(createElement(SuIcon, { props: { name: item.icon } }));
+      children.push(h(SuIcon, { props: { name: item.icon } }));
     }
+
+    className += `item`
 
     children.push(this.$slots.default);
 
-    className += `item`;
-
-    return createElement(
-      this.element || this.tag || 'div',
-      {
-        class: className
-      },
-      children
-    )
+    return this.to ? (
+        <router-link class={className}
+          to={this.to}
+          replace={this.replace}
+          append={this.append}
+          active-class={this.activeClass}
+          exact={this.exact}
+          event={this.event}
+          exact-active-class={this.exactActiveClass}>
+          {children.map(child => child)}
+        </router-link>
+      ) : h(
+        this.element || this.tag || 'div',
+        {
+          class: className,
+          on: {
+            click: (e) => { this.eventHandler(e, 'click') }
+          }
+        },
+        children
+      );
   }
 }
 </script>

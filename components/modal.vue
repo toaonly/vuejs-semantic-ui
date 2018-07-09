@@ -44,7 +44,19 @@ export default {
   beforeMount() {},
 
   mounted() {
-    this._modal = new Modal(this.$el, this.settings);
+    /** @type {ModalSettings} */
+    let settings = this.settings;
+
+    settings.onShow = (context) => { this.$emit('show', { context }); };
+    settings.onVisible = (context) => { this.$emit('visible', { context }); };
+    settings.onHide = (context, $element) => { this.$emit('hide', { context, $element }); };
+    settings.onHidden = (context) => { this.$emit('hidden', { context }); };
+    settings.onApprove = (context, $element) => { this.$emit('approve', { context, $element }); };
+    settings.onDeny = (context, $element) => { this.$emit('deny', { context, $element }); };
+
+    let modal = new Modal(this.$el, settings);
+
+    this._modal = modal;
   },
   beforeUpdate()  {},
   updated()   {},
