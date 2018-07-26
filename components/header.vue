@@ -63,11 +63,16 @@ export default {
   },
 
   mounted() {
-    let $el = $(this.$el);
+    let $el = this.$el,
+      subs = $el.querySelectorAll('.ui.header.sub');
 
-    $el.find('.ui.header.sub').each((index, el) => {
-      $(el).removeClass('ui');
-    });
+    for(let i = 0; i < subs.length; i++)  {
+      subs[i].classList.remove('ui');
+    }
+
+    if($el.closest('.ui.message'))  {
+      $el.classList.remove('ui');
+    }
   }
 }
 </script>

@@ -1,4 +1,5 @@
 import { isValid } from './util'
+import Segment from './segment'
 
 let setFormValues = (props = {
   loading,
@@ -9,6 +10,8 @@ let setFormValues = (props = {
   inverted,
 
   size,
+
+  segment
 }) => {
   return {
     /** @type {boolean} */
@@ -32,6 +35,15 @@ let setFormValues = (props = {
 
     /** @type {string} */
     size: (value => (isValid.string(value) ? value : void 0))(props.size),
+
+
+    /** @type {boolean | Segment} */
+    segment: (value => {
+      if(value === true)  return {};
+      if(isValid.object(value)) return value;
+
+      return void(0);
+    })(props.segment)
   };
 };
 
@@ -45,6 +57,8 @@ class Form {
     inverted,
 
     size,
+
+    segment
   }) {
     let _props = setFormValues(props);
 
@@ -56,6 +70,8 @@ class Form {
     this.inverted = _props.inverted;
 
     this.size = _props.size;
+
+    this.segment = _props.segment;
   }
 }
 

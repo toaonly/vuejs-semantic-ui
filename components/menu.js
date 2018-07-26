@@ -35,6 +35,12 @@ let validateProps = (
     /** @type {boolean} */
     borderless,
 
+    /** @type {boolean} */
+    right,
+
+    /** @type {boolean} */
+    left,
+
     /** @type {boolean | string} */
     icon,
 
@@ -76,6 +82,10 @@ let validateProps = (
     compact: (value => isValid.boolean(value) ? value : void 0)(props.compact),
 
     borderless: (value => isValid.boolean(value) ? value : void 0)(props.borderless),
+
+    right: (value => isValid.boolean(value) ? value : void 0)(props.right),
+
+    left: (value => isValid.boolean(value) ? value : void 0)(props.left),
 
     icon: (value => {
       if (isValid.boolean(value)) {
@@ -135,6 +145,8 @@ class Menu {
     fluid,
     compact,
     borderless,
+    right,
+    left,
 
     icon,
 
@@ -157,6 +169,8 @@ class Menu {
     this.fluid = validProps.fluid;
     this.compact = validProps.compact;
     this.borderless = validProps.borderless;
+    this.right = validProps.right;
+    this.left = validProps.left;
 
     this.icon = validProps.icon;
 
@@ -169,6 +183,8 @@ class Menu {
 
   generateClassName() {
     let className = '';
+
+    if(!(this.right || this.left))  className = `ui`;
 
     if(this.secondary) className += ` secondary`
     if(this.pointing) className += ` pointing`
@@ -189,6 +205,9 @@ class Menu {
     if(this.column) className += ` ${this.column}`
     if(this.color) className += ` ${this.color}`
     if(this.size) className += ` ${this.size}`
+
+    if(this.right) className += ` right`
+    if(this.left) className += ` left`
 
     className += ' menu';
 

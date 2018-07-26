@@ -1,5 +1,6 @@
 <template>
 <div class="ui modal">
+  <su-icon v-if="close" name="close" />
   <slot></slot>
 </div>
 </template>
@@ -31,6 +32,8 @@ export default {
   },
 
   props: {
+    close: Boolean,
+
     settings: {
       type: Object,
       default: null,

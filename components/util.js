@@ -56,6 +56,7 @@ const convertNumberToWord = (value) => {
       case 14: result = 'fourteen'; break;
       case 15: result = 'fifteen'; break;
       case 16: result = 'sixteen'; break;
+      default: result = 'one';
     }
   }
 

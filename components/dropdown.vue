@@ -1,19 +1,20 @@
 <template>
 <div class="ui">
-  <su-icon v-if="_dropdown.icon" :name="_dropdown.icon" />
+  <su-icon v-if="icon" :name="icon" />
+  <div v-if="placeholder" class="default text">{{placeholder}}</div>
   <slot></slot>
 </div>
 </template>
 
 <script>
-import { Dropdown, DropdownSettings } from './dropdown'
+import { Dropdown, DropdownModule, DropdownSettings } from './dropdown'
 
 export default {
   name: 'su-dropdown',
 
   data()  {
     return {
-      /** @type {Dropdown} */
+      /** @type {DropdownModule} */
       _dropdown: null
     }
   },
@@ -23,7 +24,7 @@ export default {
   },
 
   props: {
-    value: [ String, Number ],
+    value: [ String, Number, Boolean ],
 
     selection: Boolean,
     search: Boolean,
@@ -41,7 +42,12 @@ export default {
     compact: Boolean,
     fluid: Boolean,
 
-    icon: String,
+    icon: {
+      type: String,
+      default: 'dropdown'
+    },
+
+    placeholder: String,
 
     settings: {
       type: Object,
@@ -50,8 +56,17 @@ export default {
     },
   },
 
+  methods: {
+    onChange(value, text, $selected, context)  {
+      this.$emit('input', value);
+      this.$emit('change', { context, value, text, $selected });
+    }
+  },
+
   beforeCreate() {},
-  created() {},
+  created() {
+    this._dropdown = null;
+  },
   beforeMount() {},
 
   mounted() {
@@ -61,16 +76,17 @@ export default {
     /** @type {DropdownSettings} */
     let settings = this.settings;
 
-    let dropdown = new Dropdown(el, settings);
+    let dropdown = new Dropdown(this.$props);
 
-    settings.onOpening = (context) => { this.$emit('opening', { context }); };
-    settings.onOpen = (context) => { this.$emit('open', { context }); };
-    settings.onClosing = (context) => { this.$emit('closing', { context }); };
-    settings.onClose = (context) => { this.$emit('close', { context }); };
-    settings.onChanging = (context) => { this.$emit('changing', { context }); };
-    settings.onChange = (context) => { this.$emit('change', { context }); };
-
-    dropdown.setProps(this.$props);
+    settings.onChange = this.onChange;
+    settings.onAdd = (context, value, text, $selected) => { this.$emit('add', { context, value, text, $selected }) }
+    settings.onRemove = (context, value, text, $selected) => { this.$emit('remove', { context, value, text, $selected }) }
+    settings.onLabelSelect = (context, $selectedLabels) => { this.$emit('labelSelect', { context, $selectedLabels }) }
+    settings.onLabelCreate = (context, value, text) => { this.$emit('labelCreate', { context, value, text }) }
+    settings.onLabelRemove = (context, value) => { this.$emit('labelRemove', { context, value }) }
+    settings.onNoResults = (context, searchTerm) => { this.$emit('noResults', { context, searchTerm }) }
+    settings.onShow = (context) => { this.$emit('show', { context }) }
+    settings.onHide = (context) => { this.$emit('hide', { context }) }
 
     if(dropdown.selection)  el.classList.add('selection');
     if(dropdown.search) el.classList.add('search');
@@ -90,7 +106,9 @@ export default {
 
     el.classList.add('dropdown');
 
-    this._dropdown = dropdown;
+    this._dropdown = new DropdownModule(el, settings);
+
+    this._dropdown.setSelected(this.value);
   },
   beforeUpdate()  {},
   updated()   {},

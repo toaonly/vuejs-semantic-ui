@@ -1,5 +1,6 @@
 <script>
 import { CreateElement } from 'vue'
+import Segment from './segment'
 import Form from './form'
 
 export default {
@@ -13,14 +14,16 @@ export default {
     equalWidth: Boolean,
     inverted: Boolean,
 
-    size: String
+    size: String,
+
+    segment: [ Boolean, Object ]
   },
 
   /**
    * @param {CreateElement} createElement
    */
   render(createElement)  {
-    let className = 'ui form',
+    let className = 'ui',
       form = new Form(this.$props),
       children = [ this.$slots.default ];
 
@@ -32,6 +35,14 @@ export default {
     if(form.inverted) className += ` inverted`
 
     if(form.size) className += ` ${form.size}`
+
+    className += ` form`;
+
+    if(form.segment)  {
+      const segment = new Segment(form.segment);
+
+      className += ` ${segment.generateClassName()} segment`;
+    }
 
     return createElement(
       'div',

@@ -1,4 +1,4 @@
-import { isValid } from './util'
+import { isValid, convertNumberToWord } from './util'
 
 let setFieldValues = (props = {
   label,
@@ -50,8 +50,20 @@ let setFieldsValues = (props = {
     equalWidth: (value => (isValid.boolean(value) ? value : void 0))(props.equalWidth),
 
 
-    /** @type {string} */
-    column: (value => (isValid.string(value) ? value : void 0))(props.column),
+    /** @type {number | string} */
+    column: (value => {
+      if (isValid.string(value)) {
+        let numValue = Number(value);
+
+        if (isNaN(numValue)) return value;
+
+        value = numValue;
+      }
+
+      if (isValid.number(value)) return convertNumberToWord(value);
+
+      return void(0);
+    })(props.column),
   };
 };
 

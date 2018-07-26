@@ -12,6 +12,7 @@ let setMessageValues = (props = {
   success,
   negative,
   error,
+  close,
 
   /** @type {string} */
   icon,
@@ -52,6 +53,9 @@ let setMessageValues = (props = {
     /** @type {boolean} */
     error:    (value => (isValid.boolean(value) ? value : void 0))(props.error),
 
+    /** @type {boolean} */
+    close:    (value => (isValid.boolean(value) ? value : void 0))(props.close),
+
     /** @type {string} */
     icon:     (value => (isValid.string(value) ? value : void 0))(props.icon),
 
@@ -87,6 +91,7 @@ export default class Message {
     success,
     negative,
     error,
+    close,
 
     color,
     size
@@ -103,6 +108,7 @@ export default class Message {
     this.success  = _props.success;
     this.negative = _props.negative;
     this.error    = _props.error;
+    this.close    = _props.close;
 
     this.icon     = _props.icon;
     this.color    = _props.color;

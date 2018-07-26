@@ -2,7 +2,7 @@ import { isValid } from './util'
 import { SemanticUI, SemanticUISettings } from './semantic-ui'
 
 /**
- * @typedef ModalProp
+ * @typedef DropdownProp
  * @property {boolean} selection
  * @property {boolean} search
  * @property {boolean} multiple
@@ -19,8 +19,9 @@ import { SemanticUI, SemanticUISettings } from './semantic-ui'
  * @property {boolean} compact
  * @property {boolean} fluid
  * @property {string} icon
+ * @property {string} placeholder
  *
- * @param {ModalProp} props
+ * @param {DropdownProp} props
  */
 let validateProps = (props) => {
   return {
@@ -41,6 +42,7 @@ let validateProps = (props) => {
     fluid: (value => isValid.boolean(value) ? value : void 0)(props.fluid),
 
     icon: (value => isValid.string(value) ? value : void 0)(props.icon),
+    placeholder: (value => isValid.string(value) ? value : void 0)(props.placeholder),
   }
 }
 
@@ -286,7 +288,7 @@ export class DropdownSettings extends SemanticUISettings {
     this.useLabels = settings.useLabels || true;
     this.delimiter = settings.delimiter || ',';
 
-    this.showOnFocus = settings.showOnFocus || true;
+    this.showOnFocus = settings.showOnFocus || false;
     this.allowReselection = settings.allowReselection || false;
     this.allowTab = settings.allowTab || true;
     this.allowCategorySelection = settings.allowCategorySelection || false;
@@ -385,116 +387,116 @@ export class DropdownSettings extends SemanticUISettings {
     settings.message = settings.message || {};
 
     this.message = {
-      addResult: settings.message || 'Add <b>{term}</b>',
-      count: settings.message || '{count} selected',
-      maxSelections: settings.message || 'Max {maxCount} selections',
-      noResults: settings.message || 'No results found.',
-      serverError: settings.message || 'There was an error contacting the server'
+      addResult: settings.message.addResult || 'Add <b>{term}</b>',
+      count: settings.message.count || '{count} selected',
+      maxSelections: settings.message.maxSelections || 'Max {maxCount} selections',
+      noResults: settings.message.noResults || 'No results found.',
+      serverError: settings.message.serverError || 'There was an error contacting the server'
     };
 
     settings.error = settings.error || {};
 
     this.error = {
-      action: settings.error || 'You called a dropdown action that was not defined',
-      alreadySetup: settings.error || 'Once a select has been initialized behaviors must be called on the created ui dropdown',
-      labels: settings.error || 'Allowing user additions currently requires the use of labels.',
-      missingMultiple: settings.error || '<select> requires multiple property to be set to correctly preserve multiple values',
-      method: settings.error || 'The method you called is not defined.',
-      noAPI: settings.error || 'The API module is required to load resources remotely',
-      noStorage: settings.error || 'Saving remote data requires session storage',
-      noTransition: settings.error || 'This module requires ui transitions <https://github.com/Semantic-Org/UI-Transition>'
+      action: settings.error.action || 'You called a dropdown action that was not defined',
+      alreadySetup: settings.error.alreadySetup || 'Once a select has been initialized behaviors must be called on the created ui dropdown',
+      labels: settings.error.labels || 'Allowing user additions currently requires the use of labels.',
+      missingMultiple: settings.error.missingMultiple || '<select> requires multiple property to be set to correctly preserve multiple values',
+      method: settings.error.method || 'The method you called is not defined.',
+      noAPI: settings.error.noAPI || 'The API module is required to load resources remotely',
+      noStorage: settings.error.noStorage || 'Saving remote data requires session storage',
+      noTransition: settings.error.noTransition || 'This module requires ui transitions <https://github.com/Semantic-Org/UI-Transition>'
     };
 
     settings.regExp = settings.regExp || {};
 
     this.regExp = {
-      escape: settings.regExp || /[-[\]{}()*+?.,\\^$|#\s]/g,
-      quote: settings.regExp || /"/g
+      escape: settings.regExp.escape || /[-[\]{}()*+?.,\\^$|#\s]/g,
+      quote: settings.regExp.quote || /"/g
     };
 
     settings.metadata = settings.metadata || {};
 
     this.metadata = {
-      defaultText: settings.metadata || 'defaultText',
-      defaultValue: settings.metadata || 'defaultValue',
-      placeholderText: settings.metadata || 'placeholder',
-      text: settings.metadata || 'text',
-      value: settings.metadata || 'value'
+      defaultText: settings.metadata.defaultText || 'defaultText',
+      defaultValue: settings.metadata.defaultValue || 'defaultValue',
+      placeholderText: settings.metadata.placeholderText || 'placeholder',
+      text: settings.metadata.text || 'text',
+      value: settings.metadata.value || 'value'
     };
 
     settings.fields = settings.fields || {};
 
     this.fields = {
-      remoteValues: settings.fields || 'results',
-      values: settings.fields || 'values',
-      disabled: settings.fields || 'disabled',
-      name: settings.fields || 'name',
-      value: settings.fields || 'value',
-      text: settings.fields || 'text'
+      remoteValues: settings.fields.remoteValues || 'results',
+      values: settings.fields.values || 'values',
+      disabled: settings.fields.disabled || 'disabled',
+      name: settings.fields.name || 'name',
+      value: settings.fields.value || 'value',
+      text: settings.fields.text || 'text'
     };
 
     settings.keys = settings.keys || {};
 
     this.keys = {
-      backspace: settings.keys || 8,
-      delimiter: settings.keys || 188,
-      deleteKey: settings.keys || 46,
-      enter: settings.keys || 13,
-      escape: settings.keys || 27,
-      pageUp: settings.keys || 33,
-      pageDown: settings.keys || 34,
-      leftArrow: settings.keys || 37,
-      upArrow: settings.keys || 38,
-      rightArrow: settings.keys || 39,
-      downArrow: settings.keys || 40
+      backspace: settings.keys.backspace || 8,
+      delimiter: settings.keys.delimiter || 188,
+      deleteKey: settings.keys.deleteKey || 46,
+      enter: settings.keys.enter || 13,
+      escape: settings.keys.escape || 27,
+      pageUp: settings.keys.pageUp || 33,
+      pageDown: settings.keys.pageDown || 34,
+      leftArrow: settings.keys.leftArrow || 37,
+      upArrow: settings.keys.upArrow || 38,
+      rightArrow: settings.keys.rightArrow || 39,
+      downArrow: settings.keys.downArrow || 40
     };
 
     settings.selector = settings.selector || {};
 
     this.selector = {
-      addition: settings.selector || '.addition',
-      dropdown: settings.selector || '.ui.dropdown',
-      hidden: settings.selector || '.hidden',
-      icon: settings.selector || '> .dropdown.icon',
-      input: settings.selector || '> input[type="hidden"], > select',
-      item: settings.selector || '.item',
-      label: settings.selector || '> .label',
-      remove: settings.selector || '> .label > .delete.icon',
-      siblingLabel: settings.selector || '.label',
-      menu: settings.selector || '.menu',
-      message: settings.selector || '.message',
-      menuIcon: settings.selector || '.dropdown.icon',
-      search: settings.selector || 'input.search, .menu > .search > input, .menu input.search',
-      sizer: settings.selector || '> input.sizer',
-      text: settings.selector || '> .text:not(.icon)',
-      unselectable: settings.selector || '.disabled, .filtered'
+      addition: settings.selector.addition || '.addition',
+      dropdown: settings.selector.dropdown || '.ui.dropdown',
+      hidden: settings.selector.hidden || '.hidden',
+      icon: settings.selector.icon || '> .dropdown.icon',
+      input: settings.selector.input || '> input[type="hidden"], > select',
+      item: settings.selector.item || '.item',
+      label: settings.selector.label || '> .label',
+      remove: settings.selector.remove || '> .label > .delete.icon',
+      siblingLabel: settings.selector.siblingLabel || '.label',
+      menu: settings.selector.menu || '.menu',
+      message: settings.selector.message || '.message',
+      menuIcon: settings.selector.menuIcon || '.dropdown.icon',
+      search: settings.selector.search || 'input.search, .menu > .search > input, .menu input.search',
+      sizer: settings.selector.sizer || '> input.sizer',
+      text: settings.selector.text || '> .text:not(.icon)',
+      unselectable: settings.selector.unselectable || '.disabled, .filtered'
     };
 
     settings.className = settings.className || {};
 
     this.className = {
-      active: settings.className || 'active',
-      addition: settings.className || 'addition',
-      animating: settings.className || 'animating',
-      disabled: settings.className || 'disabled',
-      empty: settings.className || 'empty',
-      dropdown: settings.className || 'ui dropdown',
-      filtered: settings.className || 'filtered',
-      hidden: settings.className || 'hidden transition',
-      item: settings.className || 'item',
-      label: settings.className || 'ui label',
-      loading: settings.className || 'loading',
-      menu: settings.className || 'menu',
-      message: settings.className || 'message',
-      multiple: settings.className || 'multiple',
-      placeholder: settings.className || 'default',
-      sizer: settings.className || 'sizer',
-      search: settings.className || 'search',
-      selected: settings.className || 'selected',
-      selection: settings.className || 'selection',
-      upward: settings.className || 'upward',
-      leftward: settings.className || 'left',
-      visible: settings.className || 'visible'
+      active: settings.className.active || 'active',
+      addition: settings.className.addition || 'addition',
+      animating: settings.className.animating || 'animating',
+      disabled: settings.className.disabled || 'disabled',
+      empty: settings.className.empty || 'empty',
+      dropdown: settings.className.dropdown || 'ui dropdown',
+      filtered: settings.className.filtered || 'filtered',
+      hidden: settings.className.hidden || 'hidden transition',
+      item: settings.className.item || 'item',
+      label: settings.className.label || 'ui label',
+      loading: settings.className.loading || 'loading',
+      menu: settings.className.menu || 'menu',
+      message: settings.className.message || 'message',
+      multiple: settings.className.multiple || 'multiple',
+      placeholder: settings.className.placeholder || 'default',
+      sizer: settings.className.sizer || 'sizer',
+      search: settings.className.search || 'search',
+      selected: settings.className.selected || 'selected',
+      selection: settings.className.selection || 'selection',
+      upward: settings.className.upward || 'upward',
+      leftward: settings.className.leftward || 'left',
+      visible: settings.className.visible || 'visible'
     };
 
     this.silent = settings.silent || false;
@@ -504,7 +506,7 @@ export class DropdownSettings extends SemanticUISettings {
   }
 };
 
-export class Dropdown extends SemanticUI {
+export class DropdownModule extends SemanticUI {
   /**
    * Semantic UI Dropdown
    *
@@ -521,54 +523,6 @@ export class Dropdown extends SemanticUI {
     this._settings;
 
     this.setSettings(settings);
-
-    /** @type {boolean} */
-    this.selection;
-
-    /** @type {boolean} */
-    this.search;
-
-    /** @type {boolean} */
-    this.multiple;
-
-    /** @type {boolean} */
-    this.inline;
-
-    /** @type {boolean} */
-    this.pointing;
-
-    /** @type {boolean} */
-    this.floating;
-
-    /** @type {boolean} */
-    this.simple;
-
-    /** @type {boolean} */
-    this.labeled;
-
-    /** @type {boolean} */
-    this.loading;
-
-    /** @type {boolean} */
-    this.error;
-
-    /** @type {boolean} */
-    this.active;
-
-    /** @type {boolean} */
-    this.disabled;
-
-    /** @type {boolean} */
-    this.scrolling;
-
-    /** @type {boolean} */
-    this.compact;
-
-    /** @type {boolean} */
-    this.fluid;
-
-    /** @type {string} */
-    this.icon;
   };
 
   /**
@@ -591,30 +545,6 @@ export class Dropdown extends SemanticUI {
     this.initialize();
   };
 
-  /**
-   * @param {ModalProp} props
-   */
-  setProps(props)  {
-    let validProps = validateProps(props);
-
-    this.selection = validProps.selection;
-    this.search = validProps.search;
-    this.multiple = validProps.multiple;
-    this.inline = validProps.inline;
-    this.pointing = validProps.pointing;
-    this.floating = validProps.floating;
-    this.simple = validProps.simple;
-    this.labeled = validProps.labeled;
-    this.loading = validProps.loading;
-    this.error = validProps.error;
-    this.active = validProps.active;
-    this.disabled = validProps.disabled;
-    this.scrolling = validProps.scrolling;
-    this.compact = validProps.compact;
-    this.fluid = validProps.fluid;
-    this.icon = validProps.icon;
-  };
-
   setupMenu(values) { this._behavior('setup menu', values) };
   changeValues(values) { this._behavior('change values', values) };
   refresh() { this._behavior('refresh') };
@@ -629,8 +559,8 @@ export class Dropdown extends SemanticUI {
   restoreDefaultValue () { this._behavior('restore default value') };
   saveDefaults () { this._behavior('save defaults') };
   setSelected(value) { this._behavior('set selected', value) };
-  removeSelected(value) { this._behavior('remove selected', value) };
   setSelected(value1, value2) { this._behavior('set selected', [value1, value2]) };
+  removeSelected(value) { this._behavior('remove selected', value) };
   setExactly(value1, value2) { this._behavior('set exactly', [value1, value2]) };
   setText(text) { this._behavior('set text', text) };
   setValue(value) { this._behavior('set value', value) };
@@ -653,4 +583,32 @@ export class Dropdown extends SemanticUI {
   isHidden() { return this._behavior('is hidden') };
   getDefaultText() { return this._behavior('get default text') };
   getPlaceholderText() { return this._behavior('get placeholder text') };
+}
+
+export class Dropdown {
+  /**
+   * @param {DropdownProp} props
+   */
+  constructor(props) {
+    let validProps = validateProps(props);
+
+    this.selection = validProps.selection;
+    this.search = validProps.search;
+    this.multiple = validProps.multiple;
+    this.inline = validProps.inline;
+    this.pointing = validProps.pointing;
+    this.floating = validProps.floating;
+    this.simple = validProps.simple;
+    this.labeled = validProps.labeled;
+    this.loading = validProps.loading;
+    this.error = validProps.error;
+    this.active = validProps.active;
+    this.disabled = validProps.disabled;
+    this.scrolling = validProps.scrolling;
+    this.compact = validProps.compact;
+    this.fluid = validProps.fluid;
+
+    this.icon = validProps.icon;
+    this.placeholder = validProps.placeholder;
+  }
 }

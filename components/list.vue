@@ -6,11 +6,8 @@ export default {
   name: 'su-list',
 
   props: {
-    element: {
-      type: String,
-      default: 'div',
-      required: false
-    },
+    element: String,
+    tag: String,
 
     divided: Boolean,
     bulleted: Boolean,
@@ -33,8 +30,11 @@ export default {
    * @param {CreateElement} createElement
    */
   render(createElement)  {
-    let element = this.element,
-      className = 'ui list',
+    /** @type {string} */
+    let parentComponentName = this.$parent.$vnode.componentOptions.tag;
+
+    let element = this.element || this.tag || 'div',
+      className = parentComponentName === 'su-message' ? '' : 'ui',
       list = new List(this.$props),
       children = [ this.$slots.default ];
 
@@ -54,6 +54,8 @@ export default {
 
     if(list.floated) className += ` ${list.floated} floated`
     if(list.size) className += ` ${list.size}`
+
+    className += ' list';
 
     return createElement(
       element,

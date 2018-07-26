@@ -14,8 +14,12 @@ export default {
     active: Boolean,
     header: Boolean,
     link: Boolean,
+    fitted: Boolean,
 
     icon: String,
+    image: String,
+
+    value: [ String, Number, Boolean ],
 
     to: [ String, Object ],
     replace: {
@@ -51,9 +55,13 @@ export default {
   },
 
   /**
-   * @param {CreateElement} createElement
+   * @param {CreateElement} h
    */
   render(h)  {
+    /** @type {string} */
+    let parentNodeName = this.$parent.$vnode.componentOptions.propsData.tag;
+    let element = parentNodeName === 'ul' || parentNodeName === 'ol' ? 'li' :  this.element || this.tag || 'div';
+
     let item = new Item(this.$props),
       className = '',
       children = [];
@@ -61,12 +69,17 @@ export default {
     if(item.active) className += `active `
     if(item.header) className += `header `
     if(item.link) className += `link `
+    if(item.fitted) className += `fitted `
 
     if(item.icon) {
       children.push(h(SuIcon, { props: { name: item.icon } }));
     }
 
-    className += `item`
+    if(item.image)  {
+      children.push(h(SuImage, { props: { src: item.image } }));
+    }
+
+    className += `item`;
 
     children.push(this.$slots.default);
 
@@ -82,11 +95,14 @@ export default {
           {children.map(child => child)}
         </router-link>
       ) : h(
-        this.element || this.tag || 'div',
+        element,
         {
           class: className,
           on: {
             click: (e) => { this.eventHandler(e, 'click') }
+          },
+          attrs: {
+            'data-value': this.value
           }
         },
         children

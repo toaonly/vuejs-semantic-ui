@@ -50,7 +50,14 @@ export default {
 
     return createElement(
       'i',
-      { class: className }
+      {
+        class: className,
+        on: {
+          click: (e) => {
+            this.$emit('click', e);
+          }
+        }
+      }
     )
   }
 }

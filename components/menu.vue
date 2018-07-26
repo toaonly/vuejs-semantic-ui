@@ -17,6 +17,8 @@ export default {
     fluid: Boolean,
     compact: Boolean,
     borderless: Boolean,
+    right: Boolean,
+    left: Boolean,
 
     icon: [ Boolean, String ],
 
@@ -31,15 +33,12 @@ export default {
    * @param {CreateElement} createElement
    */
   render(createElement) {
-    let className = 'ui',
-      menu = new Menu(this.$props);
-
-    className += menu.generateClassName();
+    let menu = new Menu(this.$props);
 
     return createElement(
       'div',
       {
-        class: className
+        class: menu.generateClassName()
       },
       [ this.$slots.default ]
     )

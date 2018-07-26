@@ -10,7 +10,7 @@ export default {
     equalWidth: Boolean,
     inline: Boolean,
 
-    column: String
+    column: [ Number, String ]
   },
 
   /**

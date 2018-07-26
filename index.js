@@ -3,6 +3,7 @@ import Vue from 'vue'
 import SemanticUiAccordion from './components/accordion.vue'
 import SemanticUiCheckbox from './components/checkbox.vue'
 import SemanticUiDimmer from './components/dimmer.vue'
+import SemanticUiDropdown from './components/dropdown.vue'
 import SemanticUiModal from './components/modal.vue'
 import SemanticUiTab from './components/tab.vue'
 import SemanticUiSidebar from './components/sidebar.vue'
@@ -89,7 +90,9 @@ function installed(Vue)	{
   Vue.component('SuLabelGroup', SemanticUiLabelGroup);
 
   Vue.component('SuImage', SemanticUiImage);
+  Vue.component('SuImg', SemanticUiImage);
   Vue.component('SuImageGroup', SemanticUiImageGroup);
+  Vue.component('SuImgGroup', SemanticUiImageGroup);
 
   Vue.component('SuSegment', SemanticUiSegment);
   Vue.component('SuSegmentGroup', SemanticUiSegmentGroup);
@@ -140,6 +143,7 @@ function installed(Vue)	{
   Vue.component('SuAccordion', SemanticUiAccordion);
   Vue.component('SuCheckbox', SemanticUiCheckbox);
   Vue.component('SuDimmer', SemanticUiDimmer);
+  Vue.component('SuDropdown', SemanticUiDropdown);
   Vue.component('SuTab', SemanticUiTab);
   // Vue.directive('ui-dropdown', require('./semantic-dropdown.directive').default);
   Vue.component('SuModal', SemanticUiModal);

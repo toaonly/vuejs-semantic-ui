@@ -17,6 +17,7 @@ export default {
     success:  Boolean,
     negative: Boolean,
     error:    Boolean,
+    close:    Boolean,
 
     icon:     String,
     color:    String,
@@ -29,9 +30,9 @@ export default {
    * @param {CreateElement} createElement
    */
   render(createElement)  {
-    let className = 'ui message',
+    let className = 'ui',
       message   = new Message(this.$props),
-      children  = [ this.$slots.default ];
+      children  = [];
 
     if(message.hidden)    className += ` hidden`
     if(message.visible)   className += ` visible`
@@ -43,6 +44,18 @@ export default {
     if(message.success)   className += ` success`
     if(message.negative)  className += ` negative`
     if(message.error)     className += ` error`
+    if(message.close) {
+      const icon = createElement(SuIcon, {
+        props: { name: 'close' },
+        on: {
+          click: (e) => {
+            $(this.$el).closest('.message').transition('fade');
+          }
+        }
+      });
+
+      children.push(icon);
+    }
 
     if(message.icon) {
       className += ` icon`;
@@ -52,6 +65,10 @@ export default {
     if(message.size)      className += ` ${message.size}`
 
     if(message.attached)  className += ` ${message.attached}`
+
+    className += ' message';
+
+    children.push(this.$slots.default);
 
     return createElement(
       'div',
