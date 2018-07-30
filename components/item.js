@@ -8,6 +8,7 @@ import { isValid } from './util'
 
  * @property {string} icon Item Props
  * @property {string} image Item Props
+ * @property {string} color Item Props
  * @property {string} aligned ItemContent Props
  * @property {string} floated ItemContent Props
  *
@@ -15,6 +16,8 @@ import { isValid } from './util'
  * @property {boolean} unstackable Items Props
  * @property {boolean} link Items Props
  * @property {boolean} fitted Items Props
+ * @property {boolean} disabled Items Props
+ * @property {boolean} right Items Props
  * @property {boolean | string} relaxed Items Props
  *
  * @param {Props} props
@@ -24,9 +27,12 @@ let validateProps = props => ({
   header: (value => isValid.boolean(value) ? value : void 0)(props.header),
   link: (value => isValid.boolean(value) ? value : void 0)(props.link),
   fitted: (value => isValid.boolean(value) ? value : void 0)(props.fitted),
+  disabled: (value => isValid.boolean(value) ? value : void 0)(props.disabled),
+  right: (value => isValid.boolean(value) ? value : void 0)(props.right),
 
   icon: (value => isValid.string(value) ? value : void 0)(props.icon),
   image: (value => isValid.string(value) ? value : void 0)(props.image),
+  color: (value => isValid.string(value) ? value : void 0)(props.color),
   aligned: (value => isValid.string(value) ? value : void 0)(props.aligned),
   floated: (value => isValid.string(value) ? value : void 0)(props.floated),
 
@@ -65,9 +71,12 @@ class Item {
     this.header = validProps.header;
     this.link = validProps.link;
     this.fitted = validProps.fitted;
+    this.disabled = validProps.disabled;
+    this.right = validProps.right;
 
     this.icon = validProps.icon;
     this.image = validProps.image;
+    this.color = validProps.color;
   }
 }
 

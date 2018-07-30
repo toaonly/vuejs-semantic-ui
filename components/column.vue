@@ -6,6 +6,8 @@ export default {
   name: 'su-column',
 
   props: {
+    stretched: Boolean,
+
     aligned: String,
     floated: String,
     color: String,
@@ -26,6 +28,8 @@ export default {
     let className = 'column',
       column = new Column(this.$props),
       children = [ this.$slots.default ];
+
+    if(column.stretched) className += ` stretched`;
 
     if(column.aligned) className += ` ${column.aligned} aligned`;
     if(column.floated) className += ` ${column.floated} floated`;

@@ -182,9 +182,7 @@ class Menu {
   }
 
   generateClassName() {
-    let className = '';
-
-    if(!(this.right || this.left))  className = `ui`;
+    let className = 'ui';
 
     if(this.secondary) className += ` secondary`
     if(this.pointing) className += ` pointing`

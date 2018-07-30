@@ -1,5 +1,5 @@
 <script>
-import { CreateElement } from 'vue'
+import { CreateElement, VNode } from 'vue'
 import Menu from './menu'
 
 export default {
@@ -33,15 +33,45 @@ export default {
    * @param {CreateElement} createElement
    */
   render(createElement) {
-    let menu = new Menu(this.$props);
+    /** @type {string} */
+    let parentComponentName = this.$parent.$vnode.componentOptions.tag;
+
+    let menu = new Menu(this.$props),
+      className = menu.generateClassName();
+
+    switch(parentComponentName) {
+      case 'su-menu':
+      case 'su-item':
+        className = className.replace('ui', '');
+        break;
+    }
 
     return createElement(
       'div',
       {
-        class: menu.generateClassName()
+        class: className
       },
       [ this.$slots.default ]
     )
+  },
+
+  mounted() {
+    /** @type {Vue[]} */
+    let items = [];
+
+    this.$children.forEach(v => {
+      if(v.$vnode.tag.indexOf('su-item') >= 0) {
+        v.$on('click', function(e) {
+          e.stopPropagation();
+
+          if(!this.disabled)  {
+            items.forEach(item => item.$el.classList.remove('active'));
+            this.$el.classList.add('active');
+          }
+        });
+        items.push(v);
+      }
+    });
   }
 }
 </script>

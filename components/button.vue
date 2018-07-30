@@ -25,6 +25,7 @@ export default {
     fluid: Boolean,
     circular: Boolean,
     compact: Boolean,
+    primary: Boolean,
 
     color: String,
     size: String,
@@ -106,6 +107,7 @@ export default {
     if(button.toggle)  className += ` toggle`;
     if(button.fluid)  className += ` fluid`;
     if(button.circular)  className += ` circular`;
+    if(button.primary)  className += ` primary`;
 
     if(!hasDefaultSlot) {
       if(button.icon) {

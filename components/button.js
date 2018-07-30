@@ -26,6 +26,7 @@ let getLoading = (value) => (isValid.boolean(value) ? value : void(0))
 let getToggle = (value) => (isValid.boolean(value) ? value : void(0))
 let getFluid = (value) => (isValid.boolean(value) ? value : void(0))
 let getCircular = (value) => (isValid.boolean(value) ? value : void(0))
+let getPrimary = (value) => (isValid.boolean(value) ? value : void(0))
 
 let getColor = (value) => (isValid.string(value) ? value : void(0))
 let getSize = (value) => (isValid.string(value) ? value : void(0))
@@ -78,6 +79,7 @@ export default class Button {
     toggle,
     fluid,
     circular,
+    primary,
 
     color,
     size,
@@ -118,6 +120,7 @@ export default class Button {
     this.toggle = getToggle(toggle);
     this.fluid = getFluid(fluid);
     this.circular = getCircular(circular);
+    this.primary = getPrimary(primary);
 
     this.color = getColor(color);
     this.size = getSize(size);

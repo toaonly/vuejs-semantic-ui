@@ -28,6 +28,9 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
+    /** @type {string} */
+    let parentComponentName = this.$parent.$vnode.componentOptions.tag;
+
     let className = 'ui',
       element = (this.element || this.tag) ? this.element || this.tag : 'div',
       header = new Header(this.$props),
@@ -50,6 +53,12 @@ export default {
     if(header.size) className += ` ${header.size}`;
 
     className += ` header`;
+
+    // switch(parentComponentName) {
+    //   case 'su-item':
+    //     className = className.replace('ui', '');
+    //     break;
+    // }
 
     children.push(this.$slots.default);
 

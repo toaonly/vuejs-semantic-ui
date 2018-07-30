@@ -15,9 +15,12 @@ export default {
     header: Boolean,
     link: Boolean,
     fitted: Boolean,
+    disabled: Boolean,
+    right: Boolean,
 
     icon: String,
     image: String,
+    color: String,
 
     value: [ String, Number, Boolean ],
 
@@ -59,8 +62,8 @@ export default {
    */
   render(h)  {
     /** @type {string} */
-    let parentNodeName = this.$parent.$vnode.componentOptions.propsData.tag;
-    let element = parentNodeName === 'ul' || parentNodeName === 'ol' ? 'li' :  this.element || this.tag || 'div';
+    let parentComponentName = this.$parent.$vnode.componentOptions.tag;
+    let element = parentComponentName === 'ul' || parentComponentName === 'ol' ? 'li' :  this.element || this.tag || 'div';
 
     let item = new Item(this.$props),
       className = '',
@@ -70,6 +73,8 @@ export default {
     if(item.header) className += `header `
     if(item.link) className += `link `
     if(item.fitted) className += `fitted `
+    if(item.disabled) className += `disabled `
+    if(item.right) className += `right `
 
     if(item.icon) {
       children.push(h(SuIcon, { props: { name: item.icon } }));
@@ -79,7 +84,15 @@ export default {
       children.push(h(SuImage, { props: { src: item.image } }));
     }
 
+    if(item.color) className += `${item.color} `
+
     className += `item`;
+
+    switch(parentComponentName) {
+      case 'su-item':
+        className = className.replace('item', '');
+        break;
+    }
 
     children.push(this.$slots.default);
 
@@ -99,7 +112,7 @@ export default {
         {
           class: className,
           on: {
-            click: (e) => { this.eventHandler(e, 'click') }
+            click: (e) => { this.eventHandler(e, 'click'); }
           },
           attrs: {
             'data-value': this.value

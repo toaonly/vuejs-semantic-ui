@@ -1,6 +1,9 @@
 import { isValid, convertNumberToWord } from './util'
 
 let setFieldValues = (props = {
+  /** @type {boolean} */
+  stretched,
+
   /** @type {string} */
   aligned,
   floated,
@@ -16,6 +19,9 @@ let setFieldValues = (props = {
   wide,
 }) => {
   return {
+    /** @type {string} */
+    stretched: (value => (isValid.boolean(value) ? value : void 0))(props.stretched),
+
     /** @type {string} */
     aligned: (value => (isValid.string(value) ? value : void 0))(props.aligned),
 
@@ -60,6 +66,7 @@ class Column {
 
   constructor(props = {
     /** @type {boolean} */
+    stretched,
 
     /** @type {string} */
     aligned,
@@ -76,6 +83,8 @@ class Column {
     wide,
   }) {
     let _props = setFieldValues(props);
+
+    this.stretched = _props.stretched;
 
     this.aligned = _props.aligned;
     this.floated = _props.floated;
