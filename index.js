@@ -49,7 +49,10 @@ import SemanticUiMessage from './components/message.vue'
 import SemanticUiTable from './components/table.vue'
 import SemanticUiTableRow from './components/table-row.vue'
 import SemanticUiTableCell from './components/table-cell.vue'
+import SemanticUiTableHeaderCell from './components/table-header-cell.vue'
+import SemanticUiTableHead from './components/table-head.vue'
 import SemanticUiTableBody from './components/table-body.vue'
+import SemanticUiTableFoot from './components/table-foot.vue'
 
 import SemanticUiTitle from './components/title.vue'
 import SemanticUiContent from './components/content.vue'
@@ -132,25 +135,21 @@ function installed(Vue)	{
   Vue.component('SuTable', SemanticUiTable);
   Vue.component('SuTr', SemanticUiTableRow);
   Vue.component('SuTd', SemanticUiTableCell);
-  Vue.component('SuTh', SemanticUiTableCell, { props: { tag: 'th' } });
-  // Vue.component('SuTh', SemanticUiTableC, { props: { tag: 'th' } });
-
+  Vue.component('SuTh', SemanticUiTableHeaderCell);
+  Vue.component('SuThead', SemanticUiTableHead);
+  Vue.component('SuTbody', SemanticUiTableBody);
+  Vue.component('SuTfoot', SemanticUiTableFoot);
 
   Vue.component('SuTitle', SemanticUiTitle);
   Vue.component('SuContent', SemanticUiContent);
 
-  // Vue.directive('ui-transition', require('./semantic-transition.directive').default);
   Vue.component('SuAccordion', SemanticUiAccordion);
   Vue.component('SuCheckbox', SemanticUiCheckbox);
   Vue.component('SuDimmer', SemanticUiDimmer);
   Vue.component('SuDropdown', SemanticUiDropdown);
   Vue.component('SuTab', SemanticUiTab);
-  // Vue.directive('ui-dropdown', require('./semantic-dropdown.directive').default);
   Vue.component('SuModal', SemanticUiModal);
   Vue.component('SuSidebar', SemanticUiSidebar);
-  // Vue.directive('ui-search', require('./semantic-search.directive').default);
-  // Vue.directive('ui-sidebar', require('./semantic-sidebar.directive').default);
-  // Vue.directive('ui-progress', require('./semantic-progress.directive').default);
 };
 
 export default installed;

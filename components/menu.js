@@ -83,6 +83,8 @@ let validateProps = (
 
     borderless: (value => isValid.boolean(value) ? value : void 0)(props.borderless),
 
+    labeled: (value => isValid.boolean(value) ? value : void 0)(props.labeled),
+
     right: (value => isValid.boolean(value) ? value : void 0)(props.right),
 
     left: (value => isValid.boolean(value) ? value : void 0)(props.left),
@@ -102,6 +104,8 @@ let validateProps = (
     fixed: (value => isValid.string(value) ? value : void 0)(props.fixed),
 
     color: (value => isValid.string(value) ? value : void 0)(props.color),
+
+    floated: (value => isValid.string(value) ? value : void 0)(props.floated),
 
     column: (value => {
       if(isValid.string(value)) {
@@ -145,6 +149,7 @@ class Menu {
     fluid,
     compact,
     borderless,
+    labeled,
     right,
     left,
 
@@ -152,6 +157,7 @@ class Menu {
 
     fixed,
     color,
+    floated,
     column,
     attached,
     size
@@ -169,6 +175,7 @@ class Menu {
     this.fluid = validProps.fluid;
     this.compact = validProps.compact;
     this.borderless = validProps.borderless;
+    this.labeled = validProps.labeled;
     this.right = validProps.right;
     this.left = validProps.left;
 
@@ -176,6 +183,7 @@ class Menu {
 
     this.fixed = validProps.fixed;
     this.color = validProps.color;
+    this.floated = validProps.floated;
     this.column = validProps.column;
     this.attached = validProps.attached;
     this.size = validProps.size;
@@ -195,6 +203,7 @@ class Menu {
     if(this.fluid) className += ` fluid`
     if(this.compact) className += ` compact`
     if(this.borderless) className += ` borderless`
+    if(this.labeled) className += ` labeled`
 
     if(this.icon) className += ` ${this.icon}`
 
@@ -202,6 +211,7 @@ class Menu {
     if(this.attached) className += ` ${this.attached}`
     if(this.column) className += ` ${this.column}`
     if(this.color) className += ` ${this.color}`
+    if(this.floated) className += ` ${this.floated} floated`
     if(this.size) className += ` ${this.size}`
 
     if(this.right) className += ` right`

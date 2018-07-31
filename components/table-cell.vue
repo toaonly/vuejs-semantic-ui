@@ -1,26 +1,12 @@
 <script>
 import { CreateElement } from 'vue'
-import { TableCellHeader } from './table'
+import { TableCell } from './table'
+import TableCellProps from './table-cell-props'
 
 export default {
   name: 'su-td',
 
-  props: {
-    tag: String,
-
-    positive: Boolean,
-    negative: Boolean,
-    error: Boolean,
-    warning: Boolean,
-    disabled: Boolean,
-    selectable: Boolean,
-    collapsing: Boolean,
-
-    verticalAlign: String,
-    textAlign: String,
-
-    width: [ String, Number ]
-  },
+  props: TableCellProps,
 
   /**
    * @param {CreateElement} createElement
@@ -30,30 +16,15 @@ export default {
       tableCell = new TableCell(this.$props),
       children = [];
 
-    if(tableCell.positive) className += ` positive`
-    if(tableCell.negative) className += ` negative`
-    if(tableCell.error)  className += ` error`
-    if(tableCell.warning)  className += ` warning`
-    if(tableCell.disabled) className += ` disabled`
-    if(tableCell.selectable) className += ` selectable`
-    if(tableCell.collapsing) className += ` collapsing`
-
-    if(tableCell.verticalAlign)  className += ` ${tableCell.verticalAlign}`
-    if(tableCell.textAlign)  className += ` ${tableCell.textAlign}`
-    if(tableCell.verticalAlign || tableCell.textAlign)  className += ` aligned`
-
-    if(tableCell.width)  className += ` ${tableCell.width}`
-
     children.push(this.$slots.default);
 
     return createElement(
-      this.tag || 'td',
+      'td',
       {
-        class: className
+        class: TableCell.generateClassName(tableCell)
       },
       children
     )
   }
 }
 </script>
-

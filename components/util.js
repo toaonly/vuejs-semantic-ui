@@ -10,7 +10,7 @@ function isValidProp(value, type)  {
       }
     }
 
-    if(typeof type === 'function')  {
+    if(typeof type === 'function' || typeof type === 'object')  {
       if (value instanceof type) {
         return true;
       }
@@ -27,11 +27,11 @@ const isValid = {
   object: (value) => isValidProp(value, 'object'),
   function: (value) => isValidProp(value, 'function'),
   array: (value) => isValidProp(value, Array),
-  symbol: (value) => isValidProp(value, Symbol),
+  symbol: (value) => isValidProp(value, 'symbol'),
 }
 
 /**
- * 숫자를 영어로 변환
+ * Number to word(only 1 ~ 16)
  *
  * @param {number} value
  */

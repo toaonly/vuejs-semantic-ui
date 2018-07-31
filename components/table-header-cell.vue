@@ -1,27 +1,27 @@
 <script>
 import { CreateElement } from 'vue'
-import { TableSection } from './table'
-import TableSectionProps from './table-section-props'
+import { TableCell } from './table'
+import TableCellProps from './table-cell-props'
 
 export default {
-  name: 'su-tbody',
+  name: 'su-th',
 
-  props: TableSectionProps,
+  props: TableCellProps,
 
   /**
    * @param {CreateElement} createElement
    */
   render(createElement) {
     let className = '',
-      tableBody = new TableSection(this.$props),
+      tableHeaderCell = new TableCell(this.$props),
       children = [];
 
     children.push(this.$slots.default);
 
     return createElement(
-      'tbody',
+      'th',
       {
-        class: TableSection.generateClassName(tableBody)
+        class: TableCell.generateClassName(tableHeaderCell)
       },
       children
     )

@@ -1,7 +1,7 @@
 import { isValid, convertNumberToWord } from './util'
 
 /**
- * @param {Table | , TableRow, TableHeadBodyFoot | TableRow | TableHeadBodyFooter} props
+ * @param {Table | TableSection | TableRow} props
  */
 let validateProps = (props) => {
   return {
@@ -40,19 +40,19 @@ let validateProps = (props) => {
 
     padded: (value => {
       if(value === true)  return 'padded';
-      if(isValid.string(value) && value === 'very') return 'very padded';
+      if(value === 'very') return 'very padded';
       return void 0;
     })(props.padded),
 
     compact: (value => {
       if(value === true)  return 'compact';
-      if(isValid.string(value) && value === 'very') return 'very compact';
+      if(value === 'very') return 'very compact';
       return void 0;
     })(props.compact),
 
     basic: (value => {
       if(value === true)  return 'basic';
-      if(isValid.string(value) && value === 'very') return 'very basic';
+      if(value === 'very') return 'very basic';
       return void 0;
     })(props.basic),
 
@@ -221,6 +221,9 @@ class TableCell {
     /** @type {boolean} */
     this.collapsing = validProps.collapsing;
 
+    /** @type {boolean} */
+    this.singleLine = validProps.singleLine;
+
     /** @type {string} */
     this.verticalAlign = validProps.verticalAlign;
 
@@ -229,6 +232,32 @@ class TableCell {
 
     /** @type {string | number} */
     this.width = validProps.width;
+  }
+
+  /**
+   * Generate Class name
+   *
+   * @param {TableCell} tableCell
+   */
+  static generateClassName(tableCell)  {
+    let className = '';
+
+    if(tableCell.positive) className += ` positive`;
+    if(tableCell.negative) className += ` negative`;
+    if(tableCell.error)  className += ` error`;
+    if(tableCell.warning)  className += ` warning`;
+    if(tableCell.disabled) className += ` disabled`;
+    if(tableCell.selectable) className += ` selectable`;
+    if(tableCell.collapsing) className += ` collapsing`;
+    if(tableCell.singleLine) className += ` single line`;
+
+    if(tableCell.verticalAlign)  className += ` ${tableCell.verticalAlign}`;
+    if(tableCell.textAlign)  className += ` ${tableCell.textAlign}`;
+    if(tableCell.verticalAlign || tableCell.textAlign)  className += ` aligned`;
+
+    if(tableCell.width)  className += ` ${tableCell.width}`;
+
+    return className.length ? className : undefined;
   }
 }
 
@@ -263,9 +292,9 @@ class TableRow {
   }
 }
 
-class TableHeadBodyFoot {
+class TableSection {
   /**
-   * @param {TableHeadBodyFoot} props
+   * @param {TableSection} props
    */
   constructor(props) {
     let validProps = validateProps(props);
@@ -273,6 +302,19 @@ class TableHeadBodyFoot {
     /** @type {boolean} */
     this.fullWidth = validProps.fullWidth;
   }
+
+  /**
+   * Generate Class name
+   *
+   * @param {TableSection} TableSection
+   */
+  static generateClassName(TableSection)  {
+    let className = '';
+
+    if(TableSection.fullWidth) className += ` fullWidth`;
+
+    return className.length ? className : undefined;
+  }
 }
 
-export { TableCell, TableRow, TableHeadBodyFoot }
+export { TableCell, TableRow, TableSection }

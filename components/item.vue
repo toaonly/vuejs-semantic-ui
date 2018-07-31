@@ -14,7 +14,7 @@ export default {
     active: Boolean,
     header: Boolean,
     link: Boolean,
-    fitted: Boolean,
+    fitted: [ Boolean, String ],
     disabled: Boolean,
     right: Boolean,
 
@@ -62,8 +62,12 @@ export default {
    */
   render(h)  {
     /** @type {string} */
+    let parentNodeName = this.$parent.$props.tag;
+
+    /** @type {string} */
     let parentComponentName = this.$parent.$vnode.componentOptions.tag;
-    let element = parentComponentName === 'ul' || parentComponentName === 'ol' ? 'li' :  this.element || this.tag || 'div';
+
+    let element = parentNodeName === 'ul' || parentNodeName === 'ol' ? 'li' : this.element || this.tag || 'div';
 
     let item = new Item(this.$props),
       className = '',
@@ -72,7 +76,7 @@ export default {
     if(item.active) className += `active `
     if(item.header) className += `header `
     if(item.link) className += `link `
-    if(item.fitted) className += `fitted `
+    if(item.fitted) className += `${item.fitted} `
     if(item.disabled) className += `disabled `
     if(item.right) className += `right `
 

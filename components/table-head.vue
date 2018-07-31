@@ -4,7 +4,7 @@ import { TableSection } from './table'
 import TableSectionProps from './table-section-props'
 
 export default {
-  name: 'su-tbody',
+  name: 'su-thead',
 
   props: TableSectionProps,
 
@@ -13,15 +13,15 @@ export default {
    */
   render(createElement) {
     let className = '',
-      tableBody = new TableSection(this.$props),
+      tableHead = new TableSection(this.$props),
       children = [];
 
     children.push(this.$slots.default);
 
     return createElement(
-      'tbody',
+      'thead',
       {
-        class: TableSection.generateClassName(tableBody)
+        class: TableSection.generateClassName(tableHead)
       },
       children
     )

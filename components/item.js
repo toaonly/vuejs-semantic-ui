@@ -26,7 +26,12 @@ let validateProps = props => ({
   active: (value => isValid.boolean(value) ? value : void 0)(props.active),
   header: (value => isValid.boolean(value) ? value : void 0)(props.header),
   link: (value => isValid.boolean(value) ? value : void 0)(props.link),
-  fitted: (value => isValid.boolean(value) ? value : void 0)(props.fitted),
+  fitted: (value => {
+    if(value === true)  return 'fitted';
+    if(isValid.string(value)) return `${value} fitted`;
+
+    return void 0;
+  })(props.fitted),
   disabled: (value => isValid.boolean(value) ? value : void 0)(props.disabled),
   right: (value => isValid.boolean(value) ? value : void 0)(props.right),
 

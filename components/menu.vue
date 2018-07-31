@@ -17,6 +17,7 @@ export default {
     fluid: Boolean,
     compact: Boolean,
     borderless: Boolean,
+    labeled: Boolean,
     right: Boolean,
     left: Boolean,
 
@@ -26,6 +27,7 @@ export default {
     attached: String,
     column: [ String, Number ],
     color: String,
+    floated: String,
     size: String
   },
 
@@ -61,15 +63,19 @@ export default {
 
     this.$children.forEach(v => {
       if(v.$vnode.tag.indexOf('su-item') >= 0) {
-        v.$on('click', function(e) {
-          e.stopPropagation();
+        if(!v.$props.to && (v.$el.nodeName === 'A' || v.$props.link)) {
+          v.$on('click', function(e) {
+            e.stopPropagation();
 
-          if(!this.disabled)  {
-            items.forEach(item => item.$el.classList.remove('active'));
-            this.$el.classList.add('active');
-          }
-        });
-        items.push(v);
+            if(!this.disabled)  {
+              items.forEach(item => item.$el.classList.remove('active'));
+
+              this.$el.classList.add('active');
+            }
+          });
+
+          items.push(v);
+        }
       }
     });
   }

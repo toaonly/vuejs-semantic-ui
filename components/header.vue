@@ -54,11 +54,12 @@ export default {
 
     className += ` header`;
 
-    // switch(parentComponentName) {
-    //   case 'su-item':
-    //     className = className.replace('ui', '');
-    //     break;
-    // }
+    switch(parentComponentName) {
+      case 'su-header':
+      case 'su-message':
+        className = className.replace('ui', '');
+        break;
+    }
 
     children.push(this.$slots.default);
 
@@ -72,16 +73,16 @@ export default {
   },
 
   mounted() {
-    let $el = this.$el,
-      subs = $el.querySelectorAll('.ui.header.sub');
+    // let $el = this.$el,
+    //   subs = $el.querySelectorAll('.ui.header.sub');
 
-    for(let i = 0; i < subs.length; i++)  {
-      subs[i].classList.remove('ui');
-    }
+    // for(let i = 0; i < subs.length; i++)  {
+    //   subs[i].classList.remove('ui');
+    // }
 
-    if($el.closest('.ui.message'))  {
-      $el.classList.remove('ui');
-    }
+    // if($el.closest('.ui.message'))  {
+    //   $el.classList.remove('ui');
+    // }
   }
 }
 </script>
