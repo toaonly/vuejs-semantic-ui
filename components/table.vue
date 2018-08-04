@@ -7,10 +7,8 @@ export default {
 
   props: {
     celled: Boolean,
-    padded: Boolean,
     striped: Boolean,
     definition: Boolean,
-    compact: Boolean,
     structured: Boolean,
     singleLine: Boolean,
     fixed: Boolean,
@@ -21,6 +19,8 @@ export default {
     sortable: Boolean,
 
     basic: [ Boolean, String ],
+    padded: [Boolean, String],
+    compact: [Boolean, String],
 
     column: [ String, Number ],
 
@@ -68,6 +68,12 @@ export default {
       },
       children
     )
+  },
+
+  mounted() {
+    if(this.sortable === true)  {
+      $(this.$el).tablesort();
+    }
   }
 }
 </script>

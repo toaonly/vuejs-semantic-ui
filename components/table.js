@@ -99,6 +99,9 @@ let validateProps = (props) => {
     selectable: (value => isValid.boolean(value) ? value : void 0)(props.selectable),
 
     /** @type {boolean} */
+    active: (value => isValid.boolean(value) ? value : void 0)(props.active),
+
+    /** @type {boolean} */
     collapsing: (value => isValid.boolean(value) ? value : void 0)(props.collapsing),
 
     /** @type {string} */
@@ -106,6 +109,9 @@ let validateProps = (props) => {
 
     /** @type {string} */
     textAlign: (value => isValid.string(value) ? value : void 0)(props.textAlign),
+
+    /** @type {string} */
+    sorted: (value => isValid.string(value) ? value : void 0)(props.sorted),
 
     width: (value => {
       if (isValid.string(value)) {
@@ -219,6 +225,9 @@ class TableCell {
     this.selectable = validProps.selectable;
 
     /** @type {boolean} */
+    this.active = validProps.active;
+
+    /** @type {boolean} */
     this.collapsing = validProps.collapsing;
 
     /** @type {boolean} */
@@ -229,6 +238,9 @@ class TableCell {
 
     /** @type {string} */
     this.textAlign = validProps.textAlign;
+
+    /** @type {string} */
+    this.sorted = validProps.sorted;
 
     /** @type {string | number} */
     this.width = validProps.width;
@@ -248,12 +260,14 @@ class TableCell {
     if(tableCell.warning)  className += ` warning`;
     if(tableCell.disabled) className += ` disabled`;
     if(tableCell.selectable) className += ` selectable`;
+    if(tableCell.active) className += ` active`;
     if(tableCell.collapsing) className += ` collapsing`;
     if(tableCell.singleLine) className += ` single line`;
 
     if(tableCell.verticalAlign)  className += ` ${tableCell.verticalAlign}`;
     if(tableCell.textAlign)  className += ` ${tableCell.textAlign}`;
     if(tableCell.verticalAlign || tableCell.textAlign)  className += ` aligned`;
+    if(tableCell.sorted)  className += ` ${tableCell.sorted}`;
 
     if(tableCell.width)  className += ` ${tableCell.width}`;
 
@@ -279,6 +293,9 @@ class TableRow {
 
     /** @type {boolean} */
     this.warning = validProps.warning;
+
+    /** @type {boolean} */
+    this.active = validProps.active;
 
     /** @type {boolean} */
     this.disabled = validProps.disabled;
@@ -311,7 +328,7 @@ class TableSection {
   static generateClassName(TableSection)  {
     let className = '';
 
-    if(TableSection.fullWidth) className += ` fullWidth`;
+    if(TableSection.fullWidth) className += ` full-width`;
 
     return className.length ? className : undefined;
   }

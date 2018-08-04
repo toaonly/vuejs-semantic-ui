@@ -57,6 +57,7 @@ export default {
     switch(parentComponentName) {
       case 'su-header':
       case 'su-message':
+      case 'su-modal':
         className = className.replace('ui', '');
         break;
     }

@@ -61,15 +61,17 @@ import SemanticUiContent from './components/content.vue'
  * @param {Vue} Vue
  */
 function installed(Vue)	{
-  let jQuery = require('jquery'), semantic;
+  const jQuery = require('jquery')
 
   window.jQuery = window.$ = jQuery;
 
   if (process.env.NODE_ENV == 'development')  {
-    semantic = require('semantic-ui/dist/semantic.js');
+    require('semantic-ui/dist/semantic.js');
   } else  {
-    semantic = require('semantic-ui/dist/semantic.min.js');
+    require('semantic-ui/dist/semantic.min.js');
   }
+
+  document.write('<script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>');
 
   require('semantic-ui/dist/semantic.min.css');
 

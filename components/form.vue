@@ -7,6 +7,8 @@ export default {
   name: 'su-form',
 
   props: {
+    tag: String,
+
     loading: Boolean,
     success: Boolean,
     error: Boolean,
@@ -45,7 +47,7 @@ export default {
     }
 
     return createElement(
-      'div',
+      this.tag || 'div',
       {
         class: className
       },

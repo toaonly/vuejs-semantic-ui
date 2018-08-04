@@ -38,7 +38,7 @@ export default {
      * @param {MouseEvent} e
      */
     onClick(e) {
-      e.stopPropagation();
+      // e.stopPropagation();
       this.$emit('click', e);
     }
   },

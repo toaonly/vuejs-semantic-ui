@@ -25,6 +25,7 @@ export default {
     id: String,
     type: String,
     placeholder: String,
+    autocomplete: [String, Boolean],
 
     focus: Boolean,
     loading: Boolean,
@@ -72,7 +73,8 @@ export default {
         attrs: {
           id: this.id ? this.id : void(0),
           type: this.type ? this.type : 'text',
-          placeholder: this.placeholder
+          placeholder: this.placeholder,
+          autocomplete: this.autocomplete === true ? 'on' : this.autocomplete
         },
         on: {
           input: (event) => {

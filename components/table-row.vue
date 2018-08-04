@@ -10,6 +10,7 @@ export default {
     negative: Boolean,
     error: Boolean,
     warning: Boolean,
+    active: Boolean,
     disabled: Boolean,
 
     verticalAlign: String,
@@ -28,6 +29,7 @@ export default {
     if(tableRow.negative) className += ` negative`
     if(tableRow.error)  className += ` error`
     if(tableRow.warning)  className += ` warning`
+    if(tableRow.active)  className += ` active`
     if(tableRow.disabled) className += ` disabled`
 
     if(tableRow.verticalAlign)  className += ` ${tableRow.verticalAlign}`

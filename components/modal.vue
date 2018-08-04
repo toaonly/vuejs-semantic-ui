@@ -36,7 +36,7 @@ export default {
 
     settings: {
       type: Object,
-      default: null,
+      default: () => ({}),
       required: false,
     },
   },

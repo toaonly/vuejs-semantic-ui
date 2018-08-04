@@ -35,7 +35,7 @@ export default {
     },
     activeClass: {
       type: String,
-      default: 'router-link-active'
+      default: 'active'
     },
     exact: {
       type: Boolean,
