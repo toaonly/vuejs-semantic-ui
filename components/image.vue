@@ -6,13 +6,11 @@ export default {
   name: 'su-image',
 
   props: {
-    src: {
-      type: String,
-      required: true
-    },
+    src: String,
     svg: Object,
     link: String,
     hidden: Boolean,
+    reveal: Boolean,
     disabled: Boolean,
     avatar: Boolean,
     bordered: Boolean,
@@ -23,6 +21,7 @@ export default {
     centered: Boolean,
     spaced: [ Boolean, String ],
     floated: String,
+    slide: String,
     size: String,
   },
 
@@ -32,7 +31,7 @@ export default {
    */
   render(createElement, hack) {
     let element = 'img',
-      className = 'ui image',
+      className = 'ui',
       image = new Image(this.$props),
       children = [];
 
@@ -63,6 +62,11 @@ export default {
       children.push(svg);
     }
 
+    if(image.slide) {
+      element = 'div';
+      children.push(this.$slots.default);
+    }
+
     if(image.link)  {
       element = 'a';
       children.push(createElement('img', { attrs: { src: image.src } }));
@@ -70,6 +74,7 @@ export default {
 
     if(image.size)  className += ` ${image.size}`;
     if(image.hidden)  className += ` hidden`;
+    if(image.reveal)  className += ` reveal`;
     if(image.disabled)  className += ` disabled`;
     if(image.avatar)  className += ` avatar`;
     if(image.bordered)  className += ` bordered`;
@@ -80,6 +85,9 @@ export default {
     if(image.centered)  className += ` centered`;
     if(image.spaced)  className += ` ${image.spaced}`;
     if(image.floated)  className += ` ${image.floated} floated`;
+    if(image.slide)  className += ` ${image.slide} slide`;
+
+    className += ` image`;
 
     let imageTemplate = createElement(
       element,

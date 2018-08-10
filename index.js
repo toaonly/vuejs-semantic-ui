@@ -53,30 +53,39 @@ import SemanticUiTableHeaderCell from './components/table-header-cell.vue'
 import SemanticUiTableHead from './components/table-head.vue'
 import SemanticUiTableBody from './components/table-body.vue'
 import SemanticUiTableFoot from './components/table-foot.vue'
+import SemanticUiCard from './components/card.vue'
+import SemanticUiCards from './components/cards.vue'
 
 import SemanticUiTitle from './components/title.vue'
 import SemanticUiContent from './components/content.vue'
+import SemanticUiDescription from './components/description.vue'
+import SemanticUiExtraContent from './components/extra-content.vue'
+import SemanticUiMeta from './components/meta.vue'
+import SemanticUiFeed from './components/feed.vue'
+import SemanticUiEvent from './components/event.vue'
+import SemanticUiSummary from './components/summary.vue'
 
 /**
  * @param {Vue} Vue
  */
 function installed(Vue)	{
-  const jQuery = require('jquery')
+  const jQuery = require('jquery');
 
   window.jQuery = window.$ = jQuery;
 
   if (process.env.NODE_ENV == 'development')  {
-    require('semantic-ui/dist/semantic.js');
+    require('semantic-ui-css/semantic.js');
   } else  {
-    require('semantic-ui/dist/semantic.min.js');
+    require('semantic-ui-css/semantic.min.js');
   }
 
   document.write('<script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>');
 
-  require('semantic-ui/dist/semantic.min.css');
+  require('semantic-ui-css/semantic.min.css');
 
   Vue.component('SuButton', SemanticUiButton);
   Vue.component('SuButtonGroup', SemanticUiButtonGroup);
+  Vue.component('SuButtons', SemanticUiButtonGroup);
 
   Vue.component('SuContainer', SemanticUiContainer);
 
@@ -142,8 +151,17 @@ function installed(Vue)	{
   Vue.component('SuTbody', SemanticUiTableBody);
   Vue.component('SuTfoot', SemanticUiTableFoot);
 
+  Vue.component('SuCard', SemanticUiCard);
+  Vue.component('SuCards', SemanticUiCards);
+
   Vue.component('SuTitle', SemanticUiTitle);
   Vue.component('SuContent', SemanticUiContent);
+  Vue.component('SuDescription', SemanticUiDescription);
+  Vue.component('SuExtraContent', SemanticUiExtraContent);
+  Vue.component('SuMeta', SemanticUiMeta);
+  Vue.component('SuFeed', SemanticUiFeed);
+  Vue.component('SuEvent', SemanticUiEvent);
+  Vue.component('SuSummary', SemanticUiSummary);
 
   Vue.component('SuAccordion', SemanticUiAccordion);
   Vue.component('SuCheckbox', SemanticUiCheckbox);

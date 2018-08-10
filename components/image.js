@@ -15,6 +15,9 @@ let validateProps = (
     hidden,
 
     /** @type {boolean} */
+    reveal,
+
+    /** @type {boolean} */
     disabled,
 
     /** @type {boolean} */
@@ -45,6 +48,9 @@ let validateProps = (
     floated,
 
     /** @type {string} */
+    slide,
+
+    /** @type {string} */
     size
   }
 ) => {
@@ -63,6 +69,7 @@ let validateProps = (
     svg: ((value) => (isValid.object(value) ? value : void (0)))(props.svg),
     link: ((value) => (isValid.string(value) ? value : void (0)))(props.link),
     hidden: ((value) => (isValid.boolean(value) ? value : void (0)))(props.hidden),
+    reveal: ((value) => (isValid.boolean(value) ? value : void (0)))(props.reveal),
     disabled: ((value) => (isValid.boolean(value) ? value : void (0)))(props.disabled),
     avatar: ((value) => (isValid.boolean(value) ? value : void (0)))(props.avatar),
     bordered: ((value) => (isValid.boolean(value) ? value : void (0)))(props.bordered),
@@ -82,6 +89,7 @@ let validateProps = (
       return void (0);
     })(props.spaced),
     floated: ((value) => (isValid.string(value) ? value : void (0)))(props.floated),
+    slide: ((value) => (isValid.string(value) ? value : void (0)))(props.slide),
     size: ((value) => (isValid.string(value) ? value : void (0)))(props.size),
   }
 }
@@ -134,6 +142,7 @@ export default class Image {
     svg,
     link,
     hidden,
+    reveal,
     disabled,
     avatar,
     bordered,
@@ -144,6 +153,7 @@ export default class Image {
     centered,
     spaced,
     floated,
+    slide,
     size
   }) {
     let validProps = validateProps(props);
@@ -159,6 +169,9 @@ export default class Image {
 
     /** @type {boolean} */
     this.hidden = validProps.hidden;
+
+    /** @type {boolean} */
+    this.reveal = validProps.reveal;
 
     /** @type {boolean} */
     this.disabled = validProps.disabled;
@@ -189,6 +202,9 @@ export default class Image {
 
     /** @type {string} */
     this.floated = validProps.floated;
+
+    /** @type {string} */
+    this.slide = validProps.slide;
 
     /** @type {string} */
     this.size = validProps.size;

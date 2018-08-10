@@ -58,6 +58,8 @@ export default {
       case 'su-header':
       case 'su-message':
       case 'su-modal':
+      case 'su-card':
+      case 'su-content':
         className = className.replace('ui', '');
         break;
     }
