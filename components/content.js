@@ -44,6 +44,26 @@ class Content {
     /** @type {string} */
     this.floated = validProps.floated;
   }
+
+  /**
+   * Generate Content class name
+   *
+   * @param {Content} content
+   */
+  static generateClassName(content) {
+    let className = '';
+
+    if(content.active) className += `active `
+    if(content.visible) className += `visible `
+    if(content.hidden) className += `hidden `
+
+    if(content.aligned) className += `${content.aligned} aligned `
+    if(content.floated) className += `${content.floated} floated `
+
+    className += 'content';
+
+    return className;
+  }
 }
 
 export default Content

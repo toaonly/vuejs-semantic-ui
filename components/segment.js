@@ -94,7 +94,7 @@ export default class Segment {
   }
 
   generateClassName() {
-    let className = '';
+    let className = 'ui ';
 
     if (this.raised) className += `raised `;
     if (this.stacked) className += `${this.stacked} `;
@@ -114,6 +114,8 @@ export default class Segment {
     if (this.floated) className += `${this.floated} floated `;
     if (this.aligned) className += `${this.aligned} aligned `;
     if (this.basic) className += `basic `;
+
+    className += 'segment';
 
     return className;
   }

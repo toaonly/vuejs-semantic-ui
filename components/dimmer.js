@@ -1,5 +1,77 @@
 import { SemanticUI, SemanticUISettings } from './semantic-ui'
 
+let validateProps = (props = {
+  /** @type {boolean} */
+  page,
+
+  /** @type {boolean} */
+  active,
+
+  /** @type {boolean} */
+  disabled,
+
+  /** @type {boolean} */
+  blurring,
+
+  /** @type {boolean} */
+  inverted,
+
+  /** @type {boolean} */
+  simple,
+
+  /**
+   * @enum 'top' | 'bottom'
+   * @type {string}
+   */
+  aligned,
+}) => {
+  return {
+    /**
+     * @type {boolean}
+     */
+    page: (value => (isValid.boolean(value) ? value : void 0))(props.page),
+
+    /**
+     * @type {boolean}
+     */
+    active: (value => (isValid.boolean(value) ? value : void 0))(props.active),
+
+    /**
+     * @type {boolean}
+     */
+    disabled: (value => (isValid.boolean(value) ? value : void 0))(props.disabled),
+
+    /**
+     * @type {boolean}
+     */
+    blurring: (value => (isValid.boolean(value) ? value : void 0))(props.blurring),
+
+    /**
+     * @type {boolean}
+     */
+    inverted: (value => (isValid.boolean(value) ? value : void 0))(props.inverted),
+
+    /**
+     * @type {boolean}
+     */
+    simple: (value => (isValid.boolean(value) ? value : void 0))(props.simple),
+
+    /**
+     * @enum 'top' | 'bottom'
+     * @type {string}
+     */
+    aligned: (value => {
+      switch (value.toLowerCase()) {
+        case 'top':
+        case 'bottom':
+          return `${value} aligned`;
+        default:
+          return void 0;
+      }
+    })(props.aligned)
+  }
+}
+
 export class DimmerSettings extends SemanticUISettings {
   constructor(settings = {
     silent: false,
@@ -161,18 +233,61 @@ export class Dimmer extends SemanticUI {
     super('dimmer');
 
     /** @type {JQuery} */
-    this.$el = $(el);
+    this.$el// = $(el);
 
     /** @type {DimmerSettings} */
     this._settings;
 
-    this.setSettings(settings);
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.page = false;
+
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.active = false;
+
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.disabled = false;
+
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.blurring = false;
+
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.inverted = false;
+
+    /**
+     * @default false
+     * @type {boolean}
+     */
+    this.simple = false;
+
+    /**
+     * @enum 'top' | 'bottom'
+     * @type {string}
+     */
+    this.aligned;
   };
 
   /**
    * @param {DimmerSettings} settings
    */
-  initialize(settings) {
+  initialize(el, settings) {
+    this.$el = $(el);
+    this.setSettings(settings);
+
     this.$el.dimmer(settings || this._settings.toJSON());
   };
 
@@ -185,8 +300,18 @@ export class Dimmer extends SemanticUI {
     }
 
     this._settings = settings;
+  };
 
-    this.initialize();
+  setProps(props)  {
+    let validProps = validateProps(props);
+
+    this.page = validProps.page;
+    this.active = validProps.active;
+    this.disabled = validProps.disabled;
+    this.blurring = validProps.blurring;
+    this.inverted = validProps.inverted;
+    this.simple = validProps.simple;
+    this.aligned = validProps.aligned;
   };
 
   /** @param {HTMLElement} element */
@@ -217,4 +342,25 @@ export class Dimmer extends SemanticUI {
   setPageDimmer() { this._behavior('set page dimmer'); };
   setDisabled() { this._behavior('set disabled'); };
   canShow() { return this._behavior('can show'); };
+
+  /**
+   * Generate class name
+   *
+   * @param {Dimmer} dimmer
+   */
+  static generateClassName(dimmer) {
+    let className = 'ui';
+
+    if(dimmer.page) className += ` page`;
+    if(dimmer.active) className += ` active`;
+    if(dimmer.disabled) className += ` disabled`;
+    if(dimmer.blurring) className += ` blurring`;
+    if(dimmer.inverted) className += ` inverted`;
+    if(dimmer.simple) className += ` simple`;
+    if(dimmer.aligned) className += ` ${dimmer.aligned}`;
+
+    className += ' dimmer';
+
+    return className;
+  }
 }

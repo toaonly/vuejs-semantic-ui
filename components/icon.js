@@ -38,6 +38,7 @@ let hasCorner = (value) => {
   return void (0);
 }
 
+let hasFloated = (value) => isValid.string(value) ? value : void (0)
 let hasColor = (value) => isValid.string(value) ? value : void (0)
 let hasSize = (value) => isValid.string(value) ? value : void (0)
 
@@ -57,6 +58,7 @@ export default class Icon {
     flipped,
     rotated,
 
+    floated,
     size,
     color
   }) {
@@ -73,6 +75,7 @@ export default class Icon {
     this.bordered = hasBordered(bordered);
     this.corner = hasCorner(corner);
 
+    this.floated = hasFloated(floated);
     this.size = hasSize(size);
     this.color = hasColor(color);
   }

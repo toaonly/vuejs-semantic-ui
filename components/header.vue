@@ -20,7 +20,7 @@ export default {
     aligned: String,
     color: String,
     inverted: Boolean,
-    size: String,
+    size: String
   },
 
   /**
@@ -66,26 +66,13 @@ export default {
 
     children.push(this.$slots.default);
 
-    let headerTemplate = createElement(
+    return createElement(
       element,
-      { class: className },
+      {
+        class: className
+      },
       children
     );
-
-    return headerTemplate;
-  },
-
-  mounted() {
-    // let $el = this.$el,
-    //   subs = $el.querySelectorAll('.ui.header.sub');
-
-    // for(let i = 0; i < subs.length; i++)  {
-    //   subs[i].classList.remove('ui');
-    // }
-
-    // if($el.closest('.ui.message'))  {
-    //   $el.classList.remove('ui');
-    // }
   }
 }
 </script>

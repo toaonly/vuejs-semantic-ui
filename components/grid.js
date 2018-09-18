@@ -1,4 +1,5 @@
 import { isValid, convertNumberToWord } from './util'
+import Segment from './segment'
 
 let setValues = (props = {
   /** @type {boolean} */
@@ -18,6 +19,7 @@ let setValues = (props = {
   doubling,
   reversed,
   widescreen,
+  stretched,
 
   /** @type {string} */
   aligned,
@@ -28,7 +30,10 @@ let setValues = (props = {
 
   /** @type {boolean | string} */
   celled,
-  relaxed
+  relaxed,
+
+  /** @type {boolean | Segment} */
+  segment
 }) => {
   return {
     /** @type {boolean} */
@@ -79,6 +84,9 @@ let setValues = (props = {
     /** @type {boolean} */
     widescreen: (value => (isValid.boolean(value) ? value : void 0))(props.widescreen),
 
+    /** @type {boolean} */
+    stretched: (value => (isValid.boolean(value) ? value : void 0))(props.stretched),
+
     /** @type {string} */
     aligned: (value => (isValid.string(value) ? value : void 0))(props.aligned),
 
@@ -87,13 +95,21 @@ let setValues = (props = {
 
     /** @type {string} */
     column: (value => {
-      if (isValid.number(value))  {
-        return convertNumberToWord(value);
-      } else if (isValid.string(value)) {
-        return value;
-      } else {
-        return void 0;
+      if(isValid.string(value)) {
+        let numValue = Number(value);
+
+        if(isNaN(numValue))  {
+          return value;
+        } else {
+          value = numValue;
+        }
       }
+
+      if(isValid.number(value)) {
+        return convertNumberToWord(value);
+      }
+
+      return void 0;
     })(props.column),
 
     /** @type {string} */
@@ -110,7 +126,14 @@ let setValues = (props = {
       if (isValid.string(value)) return `${value} relaxed`;
 
       return void 0;
-    })(props.relaxed)
+    })(props.relaxed),
+
+    segment: (value => {
+      if(value === true)  return new Segment({});
+      if(isValid.object(value)) return new Segment(value);
+
+      return void 0;
+    })(props.segment)
   };
 };
 
@@ -133,6 +156,7 @@ class Grid {
     doubling,
     reversed,
     widescreen,
+    stretched,
 
     /** @type {string} */
     aligned,
@@ -143,7 +167,10 @@ class Grid {
 
     /** @type {boolean | string} */
     celled,
-    relaxed
+    relaxed,
+
+    /** @type {boolean | Segment} */
+    segment
   }) {
     let _props = setValues(props);
 
@@ -163,6 +190,7 @@ class Grid {
     this.doubling = _props.doubling;
     this.reversed = _props.reversed;
     this.widescreen = _props.widescreen;
+    this.stretched = _props.stretched;
 
     this.aligned = _props.aligned;
     this.device = _props.device;
@@ -171,10 +199,12 @@ class Grid {
 
     this.celled = _props.celled;
     this.relaxed = _props.relaxed;
+
+    this.segment = _props.segment;
   }
 
   generateClassName() {
-    let className = '';
+    let className = 'ui ';
 
     if (this.container) className += `container `
     if (this.internally) className += `internally `
@@ -192,6 +222,7 @@ class Grid {
     if (this.doubling) className += `doubling `
     if (this.reversed) className += `reversed `
     if (this.widescreen) className += `widescreen `
+    if (this.stretched) className += `stretched `
 
     if (this.aligned) className += `${this.aligned} aligned `
     if (this.device) className += `${this.device} only `
@@ -200,6 +231,12 @@ class Grid {
 
     if (this.celled) className += `${this.celled} `
     if (this.relaxed) className += `${this.relaxed} `
+
+    className += 'grid';
+
+    if(this.segment) {
+      className += (' ' + this.segment.generateClassName().replace('ui', ''));
+    }
 
     return className;
   }

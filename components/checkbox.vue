@@ -9,7 +9,10 @@
     :readonly="readonly"
     :value="val"
   />
-  <label>{{label}}</label>
+  <label v-if="label">{{label}}</label>
+  <label v-else>
+    <slot></slot>
+  </label>
 </div>
 </template>
 

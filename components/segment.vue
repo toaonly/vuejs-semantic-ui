@@ -33,14 +33,11 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
-    let className = 'ui ',
-      segment = new Segment(this.$props);
-
-    className += (segment.generateClassName() + ' segment');
+    let segment = new Segment(this.$props);
 
     let segmentTemplate = createElement(
       'div',
-      { class: className },
+      { class: segment.generateClassName() },
       this.$slots.default
     );
 

@@ -1,10 +1,5 @@
-<template>
-<div :class="'ui dimmer' + (inverted ? ' inverted' : '')">
-  <slot></slot>
-</div>
-</template>
-
 <script>
+import { CreateElement } from 'vue'
 import { Dimmer, DimmerSettings } from './dimmer'
 
 export default {
@@ -12,8 +7,10 @@ export default {
 
   data()  {
     return {
+      /** @type {Dimmer} */
       _dimmer: null,
-      active: false,
+
+      _active: false,
     }
   },
 
@@ -24,7 +21,14 @@ export default {
   props: {
     value: Boolean,
 
+    page: Boolean,
+    active: Boolean,
+    disabled: Boolean,
+    blurring: Boolean,
     inverted: Boolean,
+    simple: Boolean,
+
+    aligned: String,
 
     settings: {
       type: Object,
@@ -33,61 +37,98 @@ export default {
     },
   },
 
-  computed: {
-    classToString() {
-      let classToString = this.class;
-
-      if(this.class instanceof Array) {
-        classToString = this.class.join(' ');
-      }
-
-      return classToString;
-    }
-  },
-
   methods: {
-    /** @param {HTMLElement} element */
-    addContent(element) { this._dimmer.addContent(element); },
+    /**
+     * @param {string} behavior
+     * @param {any[]} args
+     */
+    dimmer(behavior, ...args) {
+      const _behavior = behavior.split(' ').map((s, i) => {
+        if(i > 0) {
+          const sf = s[0].toUpperCase();
 
-    show() { this._dimmer.show(); },
-    hide() { this._dimmer.hide(); },
-    toggle() { this._dimmer.toggle(); },
+          return sf + s.substr(1);
+        }
+
+        return s;
+      }).join('');
+
+      /** @type {function} */
+      const behaviorMethod = this[`_${_behavior}`];
+
+      if(typeof behaviorMethod === 'function') {
+        behaviorMethod.apply(this, args);
+      }
+    },
+
+    /** @param {HTMLElement} element */
+    _addContent(element) { this._dimmer.addContent(element); },
+
+    _show() { this._dimmer.show(); },
+    _hide() { this._dimmer.hide(); },
+    _toggle() { this._dimmer.toggle(); },
 
     /** @param {number} opacity */
-    setOpacity(opacity) { this._dimmer.setOpacity(opacity); },
+    _setOpacity(opacity) { this._dimmer.setOpacity(opacity); },
 
-    create() { return this._dimmer.create(); },
-    getDuration() { return this._dimmer.getDuration(); },
-    getDimmer() { return this._dimmer.getDimmer(); },
-    hasDimmer() { return this._dimmer.hasDimmer(); },
-    isActive() { return this._dimmer.isActive(); },
-    isAnimating() { return this._dimmer.isAnimating(); },
-    isDimmer() { return this._dimmer.isDimmer(); },
-    isDimmable() { return this._dimmer.isDimmable(); },
-    isDisabled() { return this._dimmer.isDisabled(); },
-    isEnabled() { return this._dimmer.isEnabled(); },
-    isPage() { return this._dimmer.isPage(); },
-    isPageDimmer() { return this._dimmer.isPageDimmer(); },
-    setActive() { this._dimmer.setActive(); },
-    setDimmable() { this._dimmer.setDimmable(); },
-    setDimmed() { this._dimmer.setDimmed(); },
-    setPageDimmer() { this._dimmer.setPageDimmer(); },
-    setDisabled() { this._dimmer.setDisabled(); },
-    canShow() { return this._dimme.canShow(); }
+    _create() { return this._dimmer.create(); },
+    _getDuration() { return this._dimmer.getDuration(); },
+    _getDimmer() { return this._dimmer.getDimmer(); },
+    _hasDimmer() { return this._dimmer.hasDimmer(); },
+    _isActive() { return this._dimmer.isActive(); },
+    _isAnimating() { return this._dimmer.isAnimating(); },
+    _isDimmer() { return this._dimmer.isDimmer(); },
+    _isDimmable() { return this._dimmer.isDimmable(); },
+    _isDisabled() { return this._dimmer.isDisabled(); },
+    _isEnabled() { return this._dimmer.isEnabled(); },
+    _isPage() { return this._dimmer.isPage(); },
+    _isPageDimmer() { return this._dimmer.isPageDimmer(); },
+    _setActive() { this._dimmer.setActive(); },
+    _setDimmable() { this._dimmer.setDimmable(); },
+    _setDimmed() { this._dimmer.setDimmed(); },
+    _setPageDimmer() { this._dimmer.setPageDimmer(); },
+    _setDisabled() { this._dimmer.setDisabled(); },
+    _canShow() { return this._dimme.canShow(); }
   },
 
   watch: {
     value() {
-      this.active = this.value;
+      this._active = this.value;
     },
 
-    active() {
-      if(this.active) this.show();
+    _active() {
+      if(this._active) this.show();
       else this.hide();
 
-      this.$emit('input', this.active);
+      this.$emit('input', this._active);
       this.$emit('change', { context: this.$el });
     }
+  },
+
+  /**
+   * @param {CreateElement} createElement
+   */
+  render(createElement) {
+    const children = [ this.$slots.default ];
+
+    this._dimmer = new Dimmer;
+    this._dimmer.setProps({
+      page: this.page,
+      active: this.active,
+      disabled: this.disabled,
+      blurring: this.blurring,
+      inverted: this.inverted,
+      simple: this.simple,
+      aligned: this.aligned
+    });
+
+    return createElement(
+      'div',
+      {
+        class: Dimmer.generateClassName(this._dimmer)
+      },
+      children
+    )
   },
 
   beforeCreate() {},
@@ -96,18 +137,23 @@ export default {
 
   mounted() {
     /** @type {DimmerSettings} */
-    let settings = this.settings;
+    const settings = this.settings;
 
     settings.onShow = (context) => {
-      this.active = true;
+      this._active = true;
       this.$emit('show', { context });
     };
+
     settings.onHide = (context) => {
-      this.active = false;
+      this._active = false;
       this.$emit('hide', { context });
     };
 
-    this._dimmer = new Dimmer(this.$el, this.settings);
+    if(this._dimmer.blurring) {
+      this.$parent.$el.classList.add('blurring');
+    }
+
+    this._dimmer.initialize(this.$el, this.settings);
   },
 
   beforeUpdate()  {},

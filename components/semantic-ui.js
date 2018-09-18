@@ -38,13 +38,13 @@ export class SemanticUISettings {
   };
 
   toJSON()  {
-    let result = {};
+    const result = {};
 
     Object.getOwnPropertyNames(this).forEach(prop => {
       result[prop] = this[prop];
     });
 
-    if (process.env.NODE_ENV == 'development')  {
+    if (process.env.NODE_ENV === 'development')  {
       console.debug(`[%s][SemanticUISettings] settings > %o`, this.name, result);
     }
 

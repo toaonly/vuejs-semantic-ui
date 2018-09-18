@@ -4,6 +4,10 @@ import { CreateElement } from 'vue'
 export default {
   name: 'su-description',
 
+  props: {
+    aligned: String
+  },
+
   /**
    * @param {CreateElement} createElement
    */

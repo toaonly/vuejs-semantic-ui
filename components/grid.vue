@@ -22,6 +22,7 @@ export default {
     doubling: Boolean,
     reversed: Boolean,
     widescreen: Boolean,
+    stretched: Boolean,
 
     aligned: [ String ],
     device: [ String ],
@@ -29,23 +30,22 @@ export default {
     column: [ Number, String ],
 
     celled: [ Boolean, String ],
-    relaxed: [ Boolean, String ]
+    relaxed: [ Boolean, String ],
+
+    segment: [ Boolean, Object ]
   },
 
   /**
    * @param {CreateElement} createElement
    */
   render(createElement)  {
-    let className = 'ui ',
-      grid = new Grid(this.$props),
+    let grid = new Grid(this.$props),
       children = [ this.$slots.default ];
-
-    className += (grid.generateClassName() + ' grid');
 
     return createElement(
       'div',
       {
-        class: className
+        class: grid.generateClassName()
       },
       children
     )

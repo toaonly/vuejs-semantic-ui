@@ -65,6 +65,8 @@ import SemanticUiFeed from './components/feed.vue'
 import SemanticUiEvent from './components/event.vue'
 import SemanticUiSummary from './components/summary.vue'
 
+import modules from './modules'
+
 /**
  * @param {Vue} Vue
  */
@@ -82,6 +84,8 @@ function installed(Vue)	{
   document.write('<script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>');
 
   require('semantic-ui-css/semantic.min.css');
+
+  modules(Vue);
 
   Vue.component('SuButton', SemanticUiButton);
   Vue.component('SuButtonGroup', SemanticUiButtonGroup);
@@ -117,6 +121,7 @@ function installed(Vue)	{
   Vue.component('SuContentHeader', SemanticUiItemContentHeader);
   Vue.component('SuContentDescription', SemanticUiItemContentDescription);
   Vue.component('SuContentExtra', SemanticUiItemContentExtra);
+  Vue.component('SuExtra', SemanticUiItemContentExtra);
 
   Vue.component('SuLoader', SemanticUiLoader);
 

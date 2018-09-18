@@ -1,10 +1,5 @@
-<template>
-<div class="ui images">
-  <slot></slot>
-</div>
-</template>
-
 <script>
+import { CreateElement } from 'vue'
 import { ImageGroup } from './image'
 
 export default {
@@ -14,11 +9,24 @@ export default {
     size: String
   },
 
-  mounted() {
-    let el = this.$el,
-      imageGroup = new ImageGroup(this.$props);
+  /**
+   * @param {CreateElement} createElement
+   */
+  render(createElement)  {
+    const imageGroup = new ImageGroup(this.$props);
+    let className = 'ui';
 
-    if(imageGroup.size) el.classList.add(imageGroup.size);
+    if(imageGroup.size) className += ` ${imageGroup.size}`;
+
+    className += ` images`;
+
+    return createElement(
+      'div',
+      {
+        class: className
+      },
+      [ this.$slots.default ]
+    )
   }
 }
 </script>

@@ -20,6 +20,7 @@ export default {
     rotated: [ Boolean, String ],
     corner: [ Boolean, String ],
 
+    floated: String,
     size: String,
     color: String,
   },
@@ -45,6 +46,7 @@ export default {
     if(icon.bordered)  className += ` bordered`
     if(icon.corner)  className += ` ${icon.corner}`
 
+    if(icon.floated)  className += ` ${icon.floated} floated`
     if(icon.color)  className += ` ${icon.color}`
     if(icon.size)  className += ` ${icon.size}`
 
