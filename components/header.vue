@@ -28,13 +28,36 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
+    const parent = this.$parent.$vnode;
+
     /** @type {string} */
-    let parentComponentName = this.$parent.$vnode.componentOptions.tag;
+    const parentName = parent.componentOptions.tag;
 
     let className = 'ui',
       element = (this.element || this.tag) ? this.element || this.tag : 'div',
       header = new Header(this.$props),
       children = [];
+
+    switch(parentName) {
+      case 'su-header':
+      case 'su-message':
+      case 'su-modal':
+      case 'su-card':
+        className = className.replace('ui', '');
+        break;
+      case 'su-content':
+        const grandParent = this.$parent.$parent;
+
+        if(!grandParent.$vnode.tag.match('su-dimmer')) {
+          className = className.replace('ui', '');
+        } else {
+          if(!grandParent.$props.inverted) {
+            header.inverted = true;
+          }
+        }
+
+        break;
+    }
 
     if(header.size)  className += ` ${header.size}`;
     if(header.icon) {
@@ -53,16 +76,6 @@ export default {
     if(header.size) className += ` ${header.size}`;
 
     className += ` header`;
-
-    switch(parentComponentName) {
-      case 'su-header':
-      case 'su-message':
-      case 'su-modal':
-      case 'su-card':
-      case 'su-content':
-        className = className.replace('ui', '');
-        break;
-    }
 
     children.push(this.$slots.default);
 

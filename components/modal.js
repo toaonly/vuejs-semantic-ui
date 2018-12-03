@@ -1,4 +1,52 @@
 import { SemanticUI, SemanticUISettings } from './semantic-ui';
+import { isValid } from './util'
+
+/**
+ * @typedef ModalProps
+ * @prop {boolean} basic
+ * @prop {boolean} fullscreen
+ * @prop {'mini' | 'tiny' | 'small' | 'large'} size
+ * @prop {boolean} active
+ *
+ * @param {ModalProps} props
+ */
+function validateProps(props) {
+  return {
+    /**
+     * @type {boolean}
+     */
+    props: (value => (isValid.boolean(value) ? value : void 0))(props.props),
+
+    /**
+     * @type {boolean}
+     */
+    fullscreen: (value => (isValid.boolean(value) ? value : void 0))(props.fullscreen),
+
+    /**
+     * @type {boolean}
+     */
+    active: (value => (isValid.boolean(value) ? value : void 0))(props.active),
+
+    /**
+     * @type {'mini' | 'tiny' | 'small' | 'large'}
+     */
+    size: (value => {
+      if(isValid.string(value)) {
+        switch (value.toLowerCase()) {
+          case 'mini':
+          case 'tiny':
+          case 'small':
+          case 'large':
+            return `${value} size`;
+          default:
+            return void 0;
+        }
+      }
+
+      return void 0;
+    })(props.size)
+  }
+}
 
 export class ModalSettings extends SemanticUISettings {
   constructor(settings = {
@@ -107,11 +155,57 @@ export class ModalSettings extends SemanticUISettings {
   };
 };
 
-export class Modal extends SemanticUI {
+export class Modal {
+  /**
+   * @param {ModalProps} props
+   */
+  constructor(props) {
+    const validProps = validateProps(props);
+
+    /** @type {boolean} */
+    this.basic = validProps.basic;
+
+    /** @type {boolean} */
+    this.fullscreen = validProps.fullscreen;
+
+    /** @type {'mini' | 'tiny' | 'small' | 'large'} */
+    this.size = validProps.size;
+
+    /** @type {boolean} */
+    this.active = validProps.active;
+  }
+
+  /**
+   * Generate class name
+   *
+   * @param {Modal} modal
+   */
+  static generateClassName(modal) {
+    let className = 'ui';
+
+    if(modal.basic) className += ` basic`;
+    if(modal.fullscreen) className += ` fullscreen`;
+    if(modal.size) className += ` ${modal.size}`;
+    if(modal.active) className += ` active`;
+
+    className += ' modal';
+
+    return className;
+  }
+}
+
+export class ModalModule extends SemanticUI {
+  /**
+   * Semantic UI Modal
+   *
+   * @param {HTMLElement} el
+   * @param {ModalSettings} settings
+   */
   constructor(el, settings = new ModalSettings)   {
     super('modal');
 
     this.$el = $(el);
+    this._settings;
 
     this.initialize(settings);
   };
@@ -121,11 +215,13 @@ export class Modal extends SemanticUI {
       settings = new ModalSettings(settings || undefined);
     }
 
-    this.$el.modal(settings.toJSON());
+    this._settings = settings;
+
+    $(this.$el).modal(settings.toJSON());
   };
 
   set setting(settings = new ModalSettings) {
-    this.initialize(settings);
+    this._settings = settings;
   };
 
   show()    { return this._behavior('show'); };

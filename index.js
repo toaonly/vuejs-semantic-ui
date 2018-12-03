@@ -70,7 +70,7 @@ import modules from './modules'
 /**
  * @param {Vue} Vue
  */
-function installed(Vue)	{
+function install(Vue)	{
   const jQuery = require('jquery');
 
   window.jQuery = window.$ = jQuery;
@@ -81,7 +81,9 @@ function installed(Vue)	{
     require('semantic-ui-css/semantic.min.js');
   }
 
-  document.write('<script src="https://semantic-ui.com/javascript/library/tablesort.js"></script>');
+  const script = document.createElement('script');
+  script.setAttribute('src', '//semantic-ui.com/javascript/library/tablesort.js');
+  document.head.append(script);
 
   require('semantic-ui-css/semantic.min.css');
 
@@ -177,4 +179,8 @@ function installed(Vue)	{
   Vue.component('SuSidebar', SemanticUiSidebar);
 };
 
-export default installed;
+class SemanticUI {};
+
+SemanticUI.install = install;
+
+export default SemanticUI.install

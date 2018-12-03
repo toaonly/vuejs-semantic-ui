@@ -27,7 +27,7 @@ export class SemanticUISettings {
 
   /**
    * @param {Object} thisArg
-   * @param {string} handler
+   * @param {Function} handler
    * @param {Array} args
    */
   emit(thisArg, handler, args = [])  {

@@ -1,20 +1,47 @@
-<template>
-<div class="ui modal">
-  <su-icon v-if="close" name="close" />
-  <slot></slot>
-</div>
-</template>
-
 <script>
-import { Modal, ModalSettings } from './modal';
+import { CreateElement, VNodeChildren } from 'vue'
+import { Modal, ModalSettings, ModalModule } from './modal'
+import SuIcon from '../components/icon.vue'
 
 export default {
   name: 'semantic-ui-modal',
 
+  model: {
+    prop: 'value'
+  },
+
+  props: {
+    value: {
+      type: Boolean,
+      required: true,
+      default: false
+    },
+
+    close: Boolean,
+
+    basic: Boolean,
+    fullscreen: Boolean,
+    size: String,
+    active: Boolean,
+
+    settings: {
+      type: Object,
+      default: () => ({}),
+      required: false
+    }
+  },
+
   data()  {
     return {
+      /** @type {Modal} */
       _modal: null
     };
+  },
+
+  watch: {
+    value() {
+      this.value === true ? this.show() : this.hide();
+    }
   },
 
   methods: {
@@ -31,40 +58,68 @@ export default {
     remove()  { this._modal.remove(); },
   },
 
-  props: {
-    close: Boolean,
+  /**
+   * @param {CreateElement} h
+   */
+  render(h) {
+    const modal = new Modal({
+      basic: this.basic,
+      fullscreen: this.fullscreen,
+      size: this.size,
+      active: this.active
+    });
 
-    settings: {
-      type: Object,
-      default: () => ({}),
-      required: false,
-    },
+    /** @type {VNodeChildren} */
+    const children = [];
+
+    if(this.close) {
+      children.push(h(SuIcon, { props: { name: 'close' } }));
+    }
+
+    children.push(this.$slots.default);
+
+    return h(
+      'div',
+      {
+        class: Modal.generateClassName(modal)
+      },
+      children
+    );
   },
-
-  beforeCrate() {},
-
-  created() {},
-  beforeMount() {},
 
   mounted() {
     /** @type {ModalSettings} */
-    let settings = this.settings;
+    const settings = this.settings;
 
-    settings.onShow = (context) => { this.$emit('show', { context }); };
-    settings.onVisible = (context) => { this.$emit('visible', { context }); };
-    settings.onHide = (context, $element) => { this.$emit('hide', { context, $element }); };
-    settings.onHidden = (context) => { this.$emit('hidden', { context }); };
-    settings.onApprove = (context, $element) => { this.$emit('approve', { context, $element }); };
-    settings.onDeny = (context, $element) => { this.$emit('deny', { context, $element }); };
+    settings.onShow = (context) => {
+      this.$emit('show', { context });
+    };
+    settings.onVisible = (context) => {
+      this.$emit('visible', { context });
+    };
+    settings.onHide = (context, $element) => {
+      this.$emit('input', false);
+      this.$emit('hide', { context, $element });
+    };
+    settings.onHidden = (context) => {
+      this.$emit('hidden', { context });
+    };
+    settings.onApprove = (context, $element) => {
+      this.$emit('approve', { context, $element });
+    };
+    settings.onDeny = (context, $element) => {
+      this.$emit('deny', { context, $element });
+    };
 
-    let modal = new Modal(this.$el, settings);
-
-    this._modal = modal;
-  },
-  beforeUpdate()  {},
-  updated()   {},
-  beforeDestroy() {},
-  destroyed() {}
+    this._modal = new ModalModule(this.$el, settings);
+  }
 };
 </script>
 
+<style scoped>
+.ui.modal > .icon.close {
+  top: 1rem;
+  right: 1rem;
+  color: #000;
+}
+</style>

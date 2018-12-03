@@ -5,7 +5,6 @@
   "author": "toaonly <toaonly42@gmail.com>",
   "private": false,
   "scripts": {},
-  "typings": "",
   "dependencies": {
     "jquery": "^3.3.1",
     "semantic-ui-css": "^2.3.3"
@@ -45,5 +44,12 @@
   "bugs": {
     "url": "https://github.com/toaonly/vuejs-semanstic-ui/issues"
   },
-  "homepage": "https://github.com/toaonly/vuejs-semanstic-ui#readme"
+  "homepage": "https://github.com/toaonly/vuejs-semanstic-ui#readme",
+  "typings": "types/index.d.ts",
+  "files": [
+    "index.js",
+    "components/*.js",
+    "components/*.vue",
+    "types/*.d.ts"
+  ]
 }

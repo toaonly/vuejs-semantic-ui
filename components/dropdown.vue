@@ -1,8 +1,17 @@
 <template>
 <div class="ui">
+  <input type="hidden" :name="name" />
   <su-icon v-if="icon" :name="icon" />
-  <div v-if="placeholder" class="default text">{{placeholder}}</div>
-  <slot></slot>
+  <input v-if="search" class="search" autocomplete="off" tabindex="0">
+  <div class="default text">{{value || placeholder}}</div>
+  <div class="menu">
+    <div v-for="(item, index) in items"
+      :key="index"
+      :data-index="item.index"
+      :data-value="item.value"
+      v-html="item.name"
+      class="item"></div>
+  </div>
 </div>
 </template>
 
@@ -24,7 +33,12 @@ export default {
   },
 
   props: {
-    value: [ String, Number, Boolean ],
+    value: [ String, Number, Boolean, Object, Array ],
+
+    items: {
+      type: Array,
+      default: () => []
+    },
 
     selection: Boolean,
     search: Boolean,
@@ -47,6 +61,7 @@ export default {
       default: 'dropdown'
     },
 
+    name: String,
     placeholder: String,
 
     settings: {

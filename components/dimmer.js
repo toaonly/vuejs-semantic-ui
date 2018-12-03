@@ -1,4 +1,5 @@
 import { SemanticUI, SemanticUISettings } from './semantic-ui'
+import { isValid } from './util'
 
 let validateProps = (props = {
   /** @type {boolean} */
@@ -61,13 +62,17 @@ let validateProps = (props = {
      * @type {string}
      */
     aligned: (value => {
-      switch (value.toLowerCase()) {
-        case 'top':
-        case 'bottom':
-          return `${value} aligned`;
-        default:
-          return void 0;
+      if(isValid.string(value)) {
+        switch (value.toLowerCase()) {
+          case 'top':
+          case 'bottom':
+            return `${value} aligned`;
+          default:
+            return void 0;
+        }
       }
+
+      return void 0;
     })(props.aligned)
   }
 }
@@ -233,7 +238,7 @@ export class Dimmer extends SemanticUI {
     super('dimmer');
 
     /** @type {JQuery} */
-    this.$el// = $(el);
+    this.$el;
 
     /** @type {DimmerSettings} */
     this._settings;
@@ -279,9 +284,12 @@ export class Dimmer extends SemanticUI {
      * @type {string}
      */
     this.aligned;
+
+    this.initialize(el, settings);
   };
 
   /**
+   * @param {HTMLElement} el
    * @param {DimmerSettings} settings
    */
   initialize(el, settings) {
@@ -303,7 +311,7 @@ export class Dimmer extends SemanticUI {
   };
 
   setProps(props)  {
-    let validProps = validateProps(props);
+    const validProps = validateProps(props);
 
     this.page = validProps.page;
     this.active = validProps.active;

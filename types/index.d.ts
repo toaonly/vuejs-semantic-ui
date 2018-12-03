@@ -1,7 +1,19 @@
-import { DimmerSettings } from "../components/dimmer";
+import Vue, { VueConstructor, PluginFunction } from "vue";
+import { DimmerSettings, Dimmer } from "./dimmer";
+import { ModalSettings, Modal } from "./modal";
 
-declare module 'vue/types/vue' {
+export default class SemanticUI {
+  static install: PluginFunction<never>;
+}
+
+declare module "vue/types/vue" {
   interface Vue {
-    $dimmer(selector: string, options: DimmerSettings): Dimmer
+    $dimmer(selector: string, options: DimmerSettings): Dimmer,
+
+    $modal(vm: VueConstructor, options?: ModalSettings): Modal,
+
+    $modal(selector?: string, options?: ModalSettings): Modal,
+
+    $modal(options?: ModalSettings): Modal
   }
 }

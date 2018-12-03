@@ -54,7 +54,7 @@ export default {
       }).join('');
 
       /** @type {function} */
-      const behaviorMethod = this[`_${_behavior}`];
+      const behaviorMethod = this[`${_behavior}`];
 
       if(typeof behaviorMethod === 'function') {
         behaviorMethod.apply(this, args);
@@ -62,33 +62,33 @@ export default {
     },
 
     /** @param {HTMLElement} element */
-    _addContent(element) { this._dimmer.addContent(element); },
+    addContent(element) { this._dimmer.addContent(element); },
 
-    _show() { this._dimmer.show(); },
-    _hide() { this._dimmer.hide(); },
-    _toggle() { this._dimmer.toggle(); },
+    show() { this._dimmer.show(); },
+    hide() { this._dimmer.hide(); },
+    toggle() { this._dimmer.toggle(); },
 
     /** @param {number} opacity */
-    _setOpacity(opacity) { this._dimmer.setOpacity(opacity); },
+    setOpacity(opacity) { this._dimmer.setOpacity(opacity); },
 
-    _create() { return this._dimmer.create(); },
-    _getDuration() { return this._dimmer.getDuration(); },
-    _getDimmer() { return this._dimmer.getDimmer(); },
-    _hasDimmer() { return this._dimmer.hasDimmer(); },
-    _isActive() { return this._dimmer.isActive(); },
-    _isAnimating() { return this._dimmer.isAnimating(); },
-    _isDimmer() { return this._dimmer.isDimmer(); },
-    _isDimmable() { return this._dimmer.isDimmable(); },
-    _isDisabled() { return this._dimmer.isDisabled(); },
-    _isEnabled() { return this._dimmer.isEnabled(); },
-    _isPage() { return this._dimmer.isPage(); },
-    _isPageDimmer() { return this._dimmer.isPageDimmer(); },
-    _setActive() { this._dimmer.setActive(); },
-    _setDimmable() { this._dimmer.setDimmable(); },
-    _setDimmed() { this._dimmer.setDimmed(); },
-    _setPageDimmer() { this._dimmer.setPageDimmer(); },
-    _setDisabled() { this._dimmer.setDisabled(); },
-    _canShow() { return this._dimme.canShow(); }
+    create() { return this._dimmer.create(); },
+    getDuration() { return this._dimmer.getDuration(); },
+    getDimmer() { return this._dimmer.getDimmer(); },
+    hasDimmer() { return this._dimmer.hasDimmer(); },
+    isActive() { return this._dimmer.isActive(); },
+    isAnimating() { return this._dimmer.isAnimating(); },
+    isDimmer() { return this._dimmer.isDimmer(); },
+    isDimmable() { return this._dimmer.isDimmable(); },
+    isDisabled() { return this._dimmer.isDisabled(); },
+    isEnabled() { return this._dimmer.isEnabled(); },
+    isPage() { return this._dimmer.isPage(); },
+    isPageDimmer() { return this._dimmer.isPageDimmer(); },
+    setActive() { this._dimmer.setActive(); },
+    setDimmable() { this._dimmer.setDimmable(); },
+    setDimmed() { this._dimmer.setDimmed(); },
+    setPageDimmer() { this._dimmer.setPageDimmer(); },
+    setDisabled() { this._dimmer.setDisabled(); },
+    canShow() { return this._dimme.canShow(); }
   },
 
   watch: {
@@ -131,10 +131,6 @@ export default {
     )
   },
 
-  beforeCreate() {},
-  created() {},
-  beforeMount() {},
-
   mounted() {
     /** @type {DimmerSettings} */
     const settings = this.settings;
@@ -154,11 +150,6 @@ export default {
     }
 
     this._dimmer.initialize(this.$el, this.settings);
-  },
-
-  beforeUpdate()  {},
-  updated()   {},
-  beforeDestroy() {},
-  destroyed() {}
+  }
 }
 </script>
