@@ -152,3 +152,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.ui.button i.icon {
+  font-size: inherit;
+}
+</style>

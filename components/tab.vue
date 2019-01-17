@@ -1,10 +1,20 @@
 <template>
-<div class="ui menu">
+<div>
+  <div class="ui tabular menu">
+    <su-item
+      v-for="(tab, index) in tabs"
+      :key="index"
+      :data-tab="tab.value"
+      tag="a">
+      {{ tab.name }}
+    </su-item>
+  </div>
   <slot></slot>
 </div>
 </template>
 
 <script>
+import SuItem from './item.vue';
 import { Tab, TabSettings } from './tab';
 
 export default {
@@ -23,6 +33,8 @@ export default {
 
   props: {
     value: [ String, Number ],
+
+    tabs: Array,
 
     settings: {
       type: Object,
@@ -53,6 +65,10 @@ export default {
     cacheRemove(path)  { return this._tab.cacheRemove(path); },
   },
 
+  components: {
+    SuItem
+  },
+
   beforeCreate() {},
 
   created() {},
@@ -79,6 +95,12 @@ export default {
     settings.onVisible = (context, tabPath, parameterArray, historyEvent) => {
       this.$emit('visible', { context, tabPath, parameterArray, historyEvent });
     };
+
+    this.$children.forEach($child => {
+      if($child.$vnode.componentOptions.tag !== 'su-item') {
+        $child.$el.classList.add('tab');
+      }
+    });
 
     this._tab = new Tab(this.$el, this.settings);
   },

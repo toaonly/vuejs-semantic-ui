@@ -1,13 +1,14 @@
 <template>
 <div class="ui">
   <input type="hidden" :name="name" />
-  <su-icon v-if="icon" :name="icon" />
+  <div v-if="value" class="text">{{ items.filter(item => item.value === value)[0].name }}</div>
+  <div v-else class="default text">{{ placeholder }}</div>
   <input v-if="search" class="search" autocomplete="off" tabindex="0">
-  <div class="default text">{{value || placeholder}}</div>
+  <su-icon v-if="icon" :name="icon" />
   <div class="menu">
     <div v-for="(item, index) in items"
       :key="index"
-      :data-index="item.index"
+      :data-index="index"
       :data-value="item.value"
       v-html="item.name"
       class="item"></div>
