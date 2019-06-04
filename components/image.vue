@@ -23,6 +23,8 @@ export default {
     floated: String,
     slide: String,
     size: String,
+
+    tag: String
   },
 
   /**
@@ -30,7 +32,7 @@ export default {
    * @param {RenderContext<Props>} hack
    */
   render(createElement, hack) {
-    let element = 'img',
+    let element = this.tag || 'img',
       className = 'ui',
       image = new Image(this.$props),
       children = [];
@@ -69,7 +71,11 @@ export default {
 
     if(image.link)  {
       element = 'a';
+    }
+
+    if(element !== 'img' && !image.svg && !image.slide) {
       children.push(createElement('img', { attrs: { src: image.src } }));
+      image.src = null
     }
 
     if(image.size)  className += ` ${image.size}`;

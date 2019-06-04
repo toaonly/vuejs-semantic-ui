@@ -50,6 +50,7 @@
     "index.js",
     "components/*.js",
     "components/*.vue",
-    "types/*.d.ts"
+    "types/*.d.ts",
+    "modules/index.js"
   ]
 }

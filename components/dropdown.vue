@@ -11,7 +11,11 @@
       :data-index="index"
       :data-value="item.value"
       v-html="item.name"
-      class="item"></div>
+      :class="{
+        item: true,
+        disabled: item.disabled
+      }">
+      </div>
   </div>
 </div>
 </template>

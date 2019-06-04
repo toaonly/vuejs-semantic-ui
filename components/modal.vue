@@ -35,27 +35,27 @@ export default {
     return {
       /** @type {Modal} */
       _modal: null
-    };
+    }
   },
 
   watch: {
     value() {
-      this.value === true ? this.show() : this.hide();
+      this.value === true ? this.show() : void(0)
     }
   },
 
   methods: {
-    show()    { this._modal.show(); },
-    hide()    { this._modal.hide(); },
-    toggle()  { this._modal.toggle(); },
-    refresh()  { this._modal.refresh(); },
-    showDimmer()  { this._modal.showDimmer(); },
-    hideDimmer()  { this._modal.hideDimmer(); },
-    hideOthers()  { this._modal.hideOthers(); },
-    hideAll()  { this._modal.hideAll(); },
-    cacheSizes()  { this._modal.cacheSizes(); },
-    canFit()  { this._modal.canFit(); },
-    remove()  { this._modal.remove(); },
+    show()    { this._modal.show() },
+    hide()    { this._modal.hide() },
+    toggle()  { this._modal.toggle() },
+    refresh()  { this._modal.refresh() },
+    showDimmer()  { this._modal.showDimmer() },
+    hideDimmer()  { this._modal.hideDimmer() },
+    hideOthers()  { this._modal.hideOthers() },
+    hideAll()  { this._modal.hideAll() },
+    cacheSizes()  { this._modal.cacheSizes() },
+    canFit()  { this._modal.canFit() },
+    remove()  { this._modal.remove() }
   },
 
   /**
@@ -67,16 +67,16 @@ export default {
       fullscreen: this.fullscreen,
       size: this.size,
       active: this.active
-    });
+    })
 
     /** @type {VNodeChildren} */
-    const children = [];
+    const children = []
 
     if(this.close) {
-      children.push(h(SuIcon, { props: { name: 'close' } }));
+      children.push(h(SuIcon, { props: { name: 'close' } }))
     }
 
-    children.push(this.$slots.default);
+    children.push(this.$slots.default)
 
     return h(
       'div',
@@ -84,36 +84,43 @@ export default {
         class: Modal.generateClassName(modal)
       },
       children
-    );
+    )
   },
 
   mounted() {
     /** @type {ModalSettings} */
-    const settings = this.settings;
+    const settings = this.settings
 
     settings.onShow = (context) => {
-      this.$emit('show', { context });
-    };
-    settings.onVisible = (context) => {
-      this.$emit('visible', { context });
-    };
-    settings.onHide = (context, $element) => {
-      this.$emit('input', false);
-      this.$emit('hide', { context, $element });
-    };
-    settings.onHidden = (context) => {
-      this.$emit('hidden', { context });
-    };
-    settings.onApprove = (context, $element) => {
-      this.$emit('approve', { context, $element });
-    };
-    settings.onDeny = (context, $element) => {
-      this.$emit('deny', { context, $element });
-    };
+      this.$emit('show', { context })
+    }
 
-    this._modal = new ModalModule(this.$el, settings);
+    settings.onVisible = (context) => {
+      this.$emit('visible', { context })
+    }
+
+    settings.onHide = (context, $element) => {
+      this.$parent.$emit('input', false)
+      this.$emit('hide', { context, $element })
+    }
+
+    settings.onHidden = (context) => {
+      this.$emit('hidden', { context })
+    }
+
+    settings.onApprove = (context, $element) => {
+      this.$emit('approve', { context, $element })
+    }
+
+    settings.onDeny = (context, $element) => {
+      this.$emit('deny', { context, $element })
+    }
+
+    this._modal = new ModalModule(this.$el, settings)
+
+    if(this.value) this.show()
   }
-};
+}
 </script>
 
 <style scoped>

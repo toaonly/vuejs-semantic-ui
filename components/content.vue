@@ -9,6 +9,8 @@ export default {
     active: Boolean,
     visible: Boolean,
     hidden: Boolean,
+    scrolling: Boolean,
+    image: Boolean,
 
     aligned: String,
     floated: String,

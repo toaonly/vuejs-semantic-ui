@@ -1,25 +1,3 @@
-<template>
-  <div v-if="!to"
-    @click="$emit('click')"
-    :data-value="value"
-    class="item">
-    <slot></slot>
-    <su-icon v-if="icon" :name="icon" />
-    <su-img v-if="image" :src="image" />
-  </div>
-  <router-link v-else
-    :class="className"
-    :to="to"
-    :replace="replace"
-    :append="append"
-    :active-class="activeClass"
-    :exact="exact"
-    :event="event"
-    :exact-active-class="exactActiveClass">
-    <slot></slot>
-  </router-link>
-</template>
-
 <script>
 import { CreateElement } from 'vue'
 import SuIcon from './icon.vue'
@@ -93,73 +71,7 @@ export default {
   /**
    * @param {CreateElement} h
    */
-  // render(h)  {
-  //   /** @type {string} */
-  //   let parentNodeName = this.$parent.$props.tag;
-
-  //   /** @type {string} */
-  //   let parentComponentName = this.$parent.$vnode.componentOptions.tag;
-
-  //   let element = parentNodeName === 'ul' || parentNodeName === 'ol' ? 'li' : this.element || this.tag || 'div';
-
-  //   let item = new Item(this.$props),
-  //     className = '',
-  //     children = [];
-
-  //   if(item.active) className += `active `
-  //   if(item.header) className += `header `
-  //   if(item.link) className += `link `
-  //   if(item.fitted) className += `${item.fitted} `
-  //   if(item.disabled) className += `disabled `
-  //   if(item.right) className += `right `
-
-  //   if(item.icon) {
-  //     children.push(h(SuIcon, { props: { name: item.icon } }));
-  //   }
-
-  //   if(item.image)  {
-  //     children.push(h(SuImage, { props: { src: item.image } }));
-  //   }
-
-  //   if(item.color) className += `${item.color} `
-
-  //   className += `item`;
-
-  //   switch(parentComponentName) {
-  //     case 'su-item':
-  //       className = className.replace('item', '');
-  //       break;
-  //   }
-
-  //   children.push(this.$slots.default);
-
-  //   return this.to ? (
-  //       <router-link class={className}
-  //         to={this.to}
-  //         replace={this.replace}
-  //         append={this.append}
-  //         active-class={this.activeClass}
-  //         exact={this.exact}
-  //         event={this.event}
-  //         exact-active-class={this.exactActiveClass}>
-  //         {children.map(child => child)}
-  //       </router-link>
-  //     ) : h(
-  //       element,
-  //       {
-  //         class: className,
-  //         on: {
-  //           click: (e) => { this.eventHandler(e, 'click'); }
-  //         },
-  //         attrs: {
-  //           'data-value': this.value
-  //         }
-  //       },
-  //       children
-  //     );
-  // },
-
-  created() {
+  render(h)  {
     /** @type {string} */
     let parentNodeName = this.$parent.$props.tag;
 
@@ -179,6 +91,16 @@ export default {
     if(item.disabled) className += `disabled `
     if(item.right) className += `right `
 
+    if(item.icon) {
+      children.push(h(SuIcon, { props: { name: item.icon } }));
+    }
+
+    if(item.image)  {
+      children.push(h(SuImage, { props: { src: item.image } }));
+    }
+
+    if(item.color) className += `${item.color} `
+
     className += `item`;
 
     switch(parentComponentName) {
@@ -187,29 +109,85 @@ export default {
         break;
     }
 
-    this.className = className;
+    children.push(this.$slots.default);
+
+    return this.to ? (
+        <router-link class={className}
+          to={this.to}
+          replace={this.replace}
+          append={this.append}
+          active-class={this.activeClass}
+          exact={this.exact}
+          event={this.event}
+          exact-active-class={this.exactActiveClass}>
+          {children.map(child => child)}
+        </router-link>
+      ) : h(
+        element,
+        {
+          class: className,
+          on: {
+            click: (e) => { this.eventHandler(e, 'click'); }
+          },
+          attrs: {
+            'data-value': this.value
+          }
+        },
+        children
+      );
   },
 
-  mounted() {
-    /** @type {HTMLElement} */
-    const $el = this.$el;
+  // created() {
+  //   /** @type {string} */
+  //   let parentNodeName = this.$parent.$props.tag;
 
-    if(this.tag) {
-      const attrs = $el.attributes;
-      const newEl = document.createElement(this.tag);
+  //   /** @type {string} */
+  //   let parentComponentName = this.$parent.$vnode.componentOptions.tag;
 
-      newEl.innerHTML = $el.innerHTML;
-      $el.parentElement.insertBefore(newEl, $el);
+  //   let element = parentNodeName === 'ul' || parentNodeName === 'ol' ? 'li' : this.element || this.tag || 'div';
 
-      for(let index = 0; index < attrs.length; index++) {
-        const { name, value } = attrs.item(index);
+  //   let item = new Item(this.$props),
+  //     className = '',
+  //     children = [];
 
-        newEl.setAttribute(name, value);
-      }
+  //   if(item.active) className += `active `
+  //   if(item.header) className += `header `
+  //   if(item.link) className += `link `
+  //   if(item.fitted) className += `${item.fitted} `
+  //   if(item.disabled) className += `disabled `
+  //   if(item.right) className += `right `
 
-      this['$el'] = newEl;
-      $el.remove();
-    }
-  }
+  //   className += `item`;
+
+  //   switch(parentComponentName) {
+  //     case 'su-item':
+  //       className = className.replace('item', '');
+  //       break;
+  //   }
+
+  //   this.className = className;
+  // },
+
+  // mounted() {
+  //   /** @type {HTMLElement} */
+  //   const $el = this.$el;
+
+  //   if(this.tag) {
+  //     const attrs = $el.attributes;
+  //     const newEl = document.createElement(this.tag);
+
+  //     newEl.innerHTML = $el.innerHTML;
+  //     $el.parentElement.insertBefore(newEl, $el);
+
+  //     for(let index = 0; index < attrs.length; index++) {
+  //       const { name, value } = attrs.item(index);
+
+  //       newEl.setAttribute(name, value);
+  //     }
+
+  //     this['$el'] = newEl;
+  //     $el.remove();
+  //   }
+  // }
 }
 </script>
