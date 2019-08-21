@@ -28,10 +28,10 @@ export default {
   },
 
   /**
-   * @param {CreateElement} createElement
+   * @param {CreateElement} h
    * @param {RenderContext<Props>} hack
    */
-  render(createElement, hack) {
+  render(h) {
     let element = this.tag || 'img',
       className = 'ui',
       image = new Image(this.$props),
@@ -40,7 +40,7 @@ export default {
     if(image.svg) {
       element = 'div';
 
-      let svgImage = createElement('image', {
+      const svgImage = h('image', {
         attrs: {
           'xlink:href': image.src,
           x: image.svg.image.x,
@@ -50,7 +50,7 @@ export default {
         }
       });
 
-      let svg = createElement(
+      const svg = h(
         'svg',
         {
           attrs: {
@@ -74,7 +74,7 @@ export default {
     }
 
     if(element !== 'img' && !image.svg && !image.slide) {
-      children.push(createElement('img', { attrs: { src: image.src } }));
+      children.push(h('img', { attrs: { src: image.src } }));
       image.src = null
     }
 
@@ -95,7 +95,7 @@ export default {
 
     className += ` image`;
 
-    let imageTemplate = createElement(
+    return h(
       element,
       {
         class: className,
@@ -106,8 +106,6 @@ export default {
       },
       children
     );
-
-    return imageTemplate;
   },
 }
 </script>

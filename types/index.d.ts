@@ -2,9 +2,7 @@ import Vue, { VueConstructor, PluginFunction } from "vue";
 import { DimmerSettings, Dimmer } from "./dimmer";
 import { ModalSettings, Modal } from "./modal";
 
-export default class SemanticUI {
-  static install: PluginFunction<never>;
-}
+export default function install(): PluginFunction<never>
 
 declare module "vue/types/vue" {
   interface Vue {

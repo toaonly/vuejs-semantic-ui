@@ -14,9 +14,9 @@ export default {
     device: String,
     largeScreen: String,
     widescreen: String,
-    computer: String,
-    tablet: String,
-    mobile: String,
+    computer: [ String, Number ],
+    tablet: [ String, Number ],
+    mobile: [ String, Number ],
 
     wide: [ String, Number ],
   },
@@ -37,9 +37,9 @@ export default {
     if(column.device) className += ` ${column.device} only`;
     if(column.largeScreen) className += ` ${column.largeScreen} large screen`;
     if(column.widescreen) className += ` ${column.widescreen} widescreen`;
-    if(column.computer) className += ` ${column.computer} computer`;
-    if(column.tablet) className += ` ${column.tablet} tablet`;
-    if(column.mobile) className += ` ${column.mobile} mobile`;
+    if(column.computer) className += ` ${column.computer} wide computer`;
+    if(column.tablet) className += ` ${column.tablet} wide tablet`;
+    if(column.mobile) className += ` ${column.mobile} wide mobile`;
 
     if(column.wide) className += ` ${column.wide} wide`;
 

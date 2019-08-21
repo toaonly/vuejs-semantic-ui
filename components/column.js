@@ -41,13 +41,37 @@ let setFieldValues = (props = {
     widescreen: (value => (isValid.string(value) ? value : void 0))(props.widescreen),
 
     /** @type {string} */
-    computer: (value => (isValid.string(value) ? value : void 0))(props.computer),
+    computer: (value => {
+      if (isValid.number(value)) {
+        return convertNumberToWord(value);
+      } else if (isValid.string(value)) {
+        return value;
+      } else {
+        return void 0;
+      }
+    })(props.computer),
 
     /** @type {string} */
-    tablet: (value => (isValid.string(value) ? value : void 0))(props.tablet),
+    tablet: (value => {
+      if (isValid.number(value)) {
+        return convertNumberToWord(value);
+      } else if (isValid.string(value)) {
+        return value;
+      } else {
+        return void 0;
+      }
+    })(props.tablet),
 
     /** @type {string} */
-    mobile: (value => (isValid.string(value) ? value : void 0))(props.mobile),
+    mobile: (value => {
+      if (isValid.number(value)) {
+        return convertNumberToWord(value);
+      } else if (isValid.string(value)) {
+        return value;
+      } else {
+        return void 0;
+      }
+    })(props.mobile),
 
     /** @type {string} */
     wide: (value => {
