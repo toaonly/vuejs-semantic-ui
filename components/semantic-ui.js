@@ -44,10 +44,6 @@ export class SemanticUISettings {
       result[prop] = this[prop];
     });
 
-    if (process.env.NODE_ENV === 'development')  {
-      console.debug(`[%s][SemanticUISettings] settings > %o`, this.name, result);
-    }
-
     return result;
   };
 };
