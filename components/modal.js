@@ -56,11 +56,12 @@ export class ModalSettings extends SemanticUISettings {
     allowMultiple: false,
     keyboardShortcuts: true,
     offset: 0,
+    useFlex: 'auto',
     context: 'body',
     closable: true,
     dimmerSettings: { closable: false, useCSS: true },
     transition: 'scale',
-    duration: 500,
+    duration: 400,
     queue: false,
     inverted: false,
 
@@ -72,7 +73,7 @@ export class ModalSettings extends SemanticUISettings {
     onDeny: function () { },
 
     selector: {
-      close: '.close, .actions .button',
+      close: '.close, .actions .button:not(.positive):not(.approve):not(.ok):not(.negative):not(.deny):not(.cancel)',
       approve: '.actions .positive, .actions .approve, .actions .ok',
       deny: '.actions .negative, .actions .deny, .actions .cancel'
     },
@@ -97,17 +98,18 @@ export class ModalSettings extends SemanticUISettings {
 
     self = this;
 
-    this.detachable = settings.detachable || true;
-    this.autofocus = settings.autofocus || true;
+    this.detachable = settings.detachable === false ? false : true;
+    this.autofocus = settings.autofocus === false ? false : true;
     this.observeChanges = settings.observeChanges || false;
     this.allowMultiple = settings.allowMultiple || false;
-    this.keyboardShortcuts = settings.keyboardShortcuts || true;
+    this.keyboardShortcuts = settings.keyboardShortcuts === false ? false : true;
     this.offset = settings.offset || 0;
+    this.useFlex = settings.useFlex === false ? false : settings.useFlex || 'auto';
     this.context = settings.context || 'body';
-    this.closable = settings.closable || true;
+    this.closable = settings.closable === false ? false : true;
     this.dimmerSettings = settings.dimmerSettings || { closable: false, useCSS: true };
     this.transition = settings.transition || 'scale';
-    this.duration = settings.duration || 500;
+    this.duration = settings.duration === 0 ? 0 : settings.duration;
     this.queue = settings.queue || false;
     this.inverted = settings.inverted || false;
 
@@ -123,18 +125,38 @@ export class ModalSettings extends SemanticUISettings {
     this.onHidden = function(...args) {
       self.emit(this, settings.onHidden, args);
     };
-    this.onApprove = function(...args)  {
-      self.emit(this, settings.onApprove, args);
+    this.onApprove = function(...args) {
+      const e = new CustomEvent('suModal::Approve', { cancelable: true })
+
+      Object.defineProperty(e, 'target', {
+        get() { return args[0] }
+      })
+
+      self.emit(this, settings.onApprove, [ e ]);
+
+      if(e.defaultPrevented) {
+        return false
+      }
     };
     this.onDeny = function(...args) {
-      self.emit(this, settings.onDeny, args);
+      const e = new CustomEvent('suModal::Deny', { cancelable: true })
+
+      Object.defineProperty(e, 'target', {
+        get() { return args[0] }
+      })
+
+      self.emit(this, settings.onDeny, [ e ]);
+
+      if(e.defaultPrevented) {
+        return false
+      }
     };
 
     settings.selector = settings.selector || {};
     settings.className = settings.className || {};
 
     this.selector = {
-      close: settings.selector.close || '.close, .actions .button',
+      close: settings.selector.close || '.close, .actions .button:not(.positive):not(.approve):not(.ok):not(.negative):not(.deny):not(.cancel)',
       approve: settings.selector.approve || '.actions .positive, .actions .approve, .actions .ok',
       deny: settings.selector.deny || '.actions .negative, .actions .deny, .actions .cancel'
     };

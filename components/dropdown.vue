@@ -80,7 +80,51 @@ export default {
     onChange(value, text, $selected, context)  {
       this.$emit('input', value);
       this.$emit('change', { context, value, text, $selected });
-    }
+    },
+
+    /**
+     * @param {{ value: any, text: string, name: string }[]} values
+     */
+    setupMenu(values) { return this._dropdown.setupMenu(values) },
+    /**
+     * @param {{ value: any, text: string, name: string }[]} values
+     */
+    changeValues(values) { return this._dropdown.changeValues(values) },
+    refresh() { return this._dropdown.refresh() },
+    toggle() { return this._dropdown.toggle() },
+    show() { return this._dropdown.show() },
+    hide() { return this._dropdown.hide() },
+    clear() { return this._dropdown.clear() },
+    hideOthers() { return this._dropdown.hideOthers() },
+    restoreDefaults() { return this._dropdown.restoreDefaults() },
+    restoreDefaultText() { return this._dropdown.restoreDefaultText() },
+    restorePlaceholderText() { return this._dropdown.restorePlaceholderText() },
+    restoreDefaultValue() { return this._dropdown.restoreDefaultValue() },
+    saveDefaults() { return this._dropdown.saveDefaults() },
+    setSelected(value) { return this._dropdown.setSelected(value) },
+    removeSelected(value) { return this._dropdown.removeSelected(value) },
+    setExactly([value1, value2]) { return this._dropdown.setExactly([value1, value2]) },
+    setText(text) { return this._dropdown.setText(text) },
+    setValue(value) { return this._dropdown.setValue(value) },
+    getText() { return this._dropdown.getText() },
+    getValue() { return this._dropdown.getValue() },
+    getItem(value) { return this._dropdown.getItem(value) },
+    bindTouchEvents() { return this._dropdown.bindTouchEvents() },
+    bindMouseEvents() { return this._dropdown.bindMouseEvents() },
+    bindIntent() { return this._dropdown.bindIntent() },
+    unbindIntent() { return this._dropdown.unbindIntent() },
+    determineIntent() { return this._dropdown.determineIntent() },
+    determineSelectAction(text, value) { return this._dropdown.determineSelectAction(text, value) },
+    setActive() { return this._dropdown.setActive() },
+    setVisible() { return this._dropdown.setVisible() },
+    removeActive() { return this._dropdown.removeActive() },
+    removeVisible() { return this._dropdown.removeVisible() },
+    isSelection() { return this._dropdown.isSelection() },
+    isAnimated() { return this._dropdown.isAnimated() },
+    isVisible() { return this._dropdown.isVisible() },
+    isHidden() { return this._dropdown.isHidden() },
+    getDefaultText() { return this._dropdown.getDefaultText() },
+    getPlaceholderText() { return this._dropdown.getPlaceholderText() },
   },
 
   beforeCreate() {},

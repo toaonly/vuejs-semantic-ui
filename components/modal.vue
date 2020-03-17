@@ -6,16 +6,16 @@ import SuIcon from '../components/icon.vue'
 export default {
   name: 'semantic-ui-modal',
 
-  model: {
-    prop: 'value'
-  },
+  // model: {
+  //   prop: 'value'
+  // },
 
   props: {
-    value: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
+    // value: {
+    //   type: Boolean,
+    //   required: true,
+    //   default: false
+    // },
 
     close: Boolean,
 
@@ -38,11 +38,11 @@ export default {
     }
   },
 
-  watch: {
-    value() {
-      this.value === true ? this.show() : void(0)
-    }
-  },
+  // watch: {
+  //   value() {
+  //     this.value === true ? this.show() : void(0)
+  //   }
+  // },
 
   methods: {
     show()    { this._modal.show() },
@@ -100,7 +100,6 @@ export default {
     }
 
     settings.onHide = (context, $element) => {
-      this.$parent.$emit('input', false)
       this.$emit('hide', { context, $element })
     }
 
@@ -108,12 +107,12 @@ export default {
       this.$emit('hidden', { context })
     }
 
-    settings.onApprove = (context, $element) => {
-      this.$emit('approve', { context, $element })
+    settings.onApprove = event => {
+      this.$emit('approve', event)
     }
 
-    settings.onDeny = (context, $element) => {
-      this.$emit('deny', { context, $element })
+    settings.onDeny = event => {
+      this.$emit('deny', event)
     }
 
     this._modal = new ModalModule(this.$el, settings)

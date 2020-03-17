@@ -256,41 +256,41 @@ export class DropdownSettings extends SemanticUISettings {
     this.on = settings.on || 'click';
     this.action = settings.action || 'activate';
 
-    this.values = settings.values || false;
+    this.values = settings.values === false ? false : settings.values;
 
     this.apiSettings = settings.apiSettings === false ?  false : (settings.apiSettings || false),
     this.selectOnKeydown = settings.selectOnKeydown || true;
     this.minCharacters = settings.minCharacters || 0;
 
     this.filterRemoteData = settings.filterRemoteData || false;
-    this.saveRemoteData = settings.saveRemoteData || true;
+    this.saveRemoteData = settings.saveRemoteData === false ? false : settings.saveRemoteData;
 
     this.throttle = settings.throttle === 0 ? 0 : settings.throttle || 200;
 
     this.context = settings.context || window;
     this.direction = settings.direction || 'auto';
-    this.keepOnScreen = settings.keepOnScreen || true;
+    this.keepOnScreen = settings.keepOnScreen === false ? false : settings.keepOnScreen;
 
     this.match = settings.match || 'both';
     this.fullTextSearch = settings.fullTextSearch || false;
 
     this.placeholder = settings.placeholder || 'auto';
-    this.preserveHTML = settings.preserveHTML || true;
+    this.preserveHTML = settings.preserveHTML === false ? false : settings.preserveHTML;
     this.sortSelect = settings.sortSelect || false;
 
-    this.forceSelection = settings.forceSelection || true;
+    this.forceSelection = settings.forceSelection === false ? false : settings.forceSelection;
 
     this.allowAdditions = settings.allowAdditions || false;
     this.ignoreCase = settings.ignoreCase || false;
-    this.hideAdditions = settings.hideAdditions || true;
+    this.hideAdditions = settings.hideAdditions === false ? false : settings.hideAdditions;
 
     this.maxSelections = settings.maxSelections || false;
-    this.useLabels = settings.useLabels || true;
+    this.useLabels = settings.useLabels === false ? false : settings.useLabels;
     this.delimiter = settings.delimiter || ',';
 
     this.showOnFocus = settings.showOnFocus || false;
     this.allowReselection = settings.allowReselection || false;
-    this.allowTab = settings.allowTab || true;
+    this.allowTab = settings.allowTab === false ? false : settings.allowTab;
     this.allowCategorySelection = settings.allowCategorySelection || false;
 
     this.fireOnInit = settings.fireOnInit || false;
@@ -502,7 +502,7 @@ export class DropdownSettings extends SemanticUISettings {
     this.silent = settings.silent || false;
     this.debug = settings.debug || false;
     this.verbose = settings.verbose || false;
-    this.performance = settings.performance || true;
+    this.performance = settings.performance === false ? false : settings.performance;
   }
 };
 
@@ -559,9 +559,8 @@ export class DropdownModule extends SemanticUI {
   restoreDefaultValue () { this._behavior('restore default value') };
   saveDefaults () { this._behavior('save defaults') };
   setSelected(value) { this._behavior('set selected', value) };
-  setSelected(value1, value2) { this._behavior('set selected', [value1, value2]) };
   removeSelected(value) { this._behavior('remove selected', value) };
-  setExactly(value1, value2) { this._behavior('set exactly', [value1, value2]) };
+  setExactly([value1, value2]) { this._behavior('set exactly', [value1, value2]) };
   setText(text) { this._behavior('set text', text) };
   setValue(value) { this._behavior('set value', value) };
   getText() { return this._behavior('get text') };

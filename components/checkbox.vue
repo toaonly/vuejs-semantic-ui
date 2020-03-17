@@ -93,69 +93,69 @@ export default {
     },
 
     _toggle()  { this._checkbox.toggle() },
-    _check() { this._checkbox.check() },
-    _uncheck() { this._checkbox.uncheck() },
-    _indeterminate() { this._checkbox.indeterminate() },
-    _determinate() { this._checkbox.determinate() },
-    _enable()  { this._checkbox.enable() },
-    _disable()  { this._checkbox.disable() },
-    _setChecked() { this._checkbox.setChecked() },
-    _setUnchecked() { this._checkbox.setUnchecked() },
-    _setIndeterminate() { this._checkbox.setIndeterminate() },
-    _setDeterminate() { this._checkbox.setDeterminate() },
-    _setEnabled() { this._checkbox.setEnabled() },
-    _setDisabled()  { this._checkbox.setDisabled() },
+    check() { this._checkbox.check() },
+    uncheck() { this._checkbox.uncheck() },
+    indeterminate() { this._checkbox.indeterminate() },
+    determinate() { this._checkbox.determinate() },
+    enable()  { this._checkbox.enable() },
+    disable()  { this._checkbox.disable() },
+    setChecked() { this._checkbox.setChecked() },
+    setUnchecked() { this._checkbox.setUnchecked() },
+    setIndeterminate() { this._checkbox.setIndeterminate() },
+    setDeterminate() { this._checkbox.setDeterminate() },
+    setEnabled() { this._checkbox.setEnabled() },
+    setDisabled()  { this._checkbox.setDisabled() },
 
     /**
      * @param {string} selector
      * @param {string} behavior
      */
-    _attachEvents(selector, behavior) { this._checkbox.attachEvents(selector, behavior) },
+    attachEvents(selector, behavior) { this._checkbox.attachEvents(selector, behavior) },
 
     /**
      * @returns {boolean}
      */
-    _isRadio() { return this._checkbox.isRadio(); },
+    isRadio() { return this._checkbox.isRadio(); },
 
     /**
      * @returns {boolean}
      */
-    _isChecked() { return this._checkbox.isChecked(); },
+    isChecked() { return this._checkbox.isChecked(); },
 
     /**
      * @returns {boolean}
      */
-    _isUnchecked() { return this._checkbox.isUnchecked(); },
+    isUnchecked() { return this._checkbox.isUnchecked(); },
 
     /**
      * @returns {boolean}
      */
-    _canChange() { return this._checkbox.canChange(); },
+    canChange() { return this._checkbox.canChange(); },
 
     /**
      * @returns {boolean}
      */
-    _shouldAllowCheck() { return this._checkbox.shouldAllowCheck(); },
+    shouldAllowCheck() { return this._checkbox.shouldAllowCheck(); },
 
     /**
      * @returns {boolean}
      */
-    _shouldAllowUncheck() { return this._checkbox.shouldAllowUncheck(); },
+    shouldAllowUncheck() { return this._checkbox.shouldAllowUncheck(); },
 
     /**
      * @returns {boolean}
      */
-    _shouldAllowDeterminate() { return this._checkbox.shouldAllowDeterminate(); },
+    shouldAllowDeterminate() { return this._checkbox.shouldAllowDeterminate(); },
 
     /**
      * @returns {boolean}
      */
-    _shouldAllowIndeterminate() { return this._checkbox.shouldAllowIndeterminate(); },
+    shouldAllowIndeterminate() { return this._checkbox.shouldAllowIndeterminate(); },
 
     /**
      * @returns {boolean}
      */
-    _canUncheck() { return this._checkbox.canUncheck() },
+    canUncheck() { return this._checkbox.canUncheck() },
   },
 
   watch: {
