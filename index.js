@@ -71,9 +71,14 @@ import modules from './modules'
  * @param {Vue} Vue
  */
 function install(Vue)	{
-  const jQuery = require('jquery');
+  if(!window.$) {
+    const jQuery = require('jquery');
 
-  window.jQuery = window.$ = jQuery;
+    Object.defineProperties(window, {
+      $: { enumerable: false, configurable: false, get: () => jQuery },
+      jQuery: { enumerable: false, configurable: false, get: () => jQuery }
+    })
+  }
 
   if (process.env.NODE_ENV == 'development')  {
     require('semantic-ui-css/semantic.js');
